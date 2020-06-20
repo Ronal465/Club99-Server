@@ -14,7 +14,8 @@ class ListasFormularios {
         config(): void {
 
                 //Ruta Para Obtener una lista de todos los generos registrados
-                this.router.get('/api/list/TipoGenero', ObtListarFormulariosControlador.GetListTipoGenero);this.router.get('/api/list/Profesion',ObtListarFormulariosControlador.GetProfesion);
+                this.router.get('/api/list/TipoGenero', ObtListarFormulariosControlador.GetListTipoGenero);
+                this.router.get('/api/list/Profesion',ObtListarFormulariosControlador.GetProfesion);
                 this.router.get('/api/list/ClasificacionEtnica',ObtListarFormulariosControlador.GetEtnia);
                 this.router.get('/api/list/TipoIdentificacion',ObtListarFormulariosControlador.GetTipoIdentificacion);
                 this.router.get('/api/list/EstadoValidacion',ObtListarFormulariosControlador.GetEstadoValidacion);
