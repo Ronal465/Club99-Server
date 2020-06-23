@@ -12,11 +12,112 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ObtListarFormulariosControlador = void 0;
 const database_1 = __importDefault(require("../database"));
 class ListarFormulariosControlador {
-    GetListTipoGenero(req, res) {
+    getListTipoGenero(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             yield database_1.default.query('SELECT * FROM TipoGenero', function (err, result, fields) {
+                if (err)
+                    throw err;
+                res.json(result);
+            });
+        });
+    }
+    ;
+    getProfesion(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('SELECT * FROM Profesion', function (err, result, fields) {
+                if (err)
+                    throw err;
+                res.json(result);
+            });
+        });
+    }
+    getEtnia(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('SELECT * FROM ClasificacionEtnica', function (err, result, fields) {
+                if (err)
+                    throw err;
+                res.json(result);
+            });
+        });
+    }
+    getTipoIdentificacion(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('SELECT * FROM TipoIdentificacion', function (err, result, fields) {
+                if (err)
+                    throw err;
+                res.json(result);
+            });
+        });
+    }
+    getEstadoValidacion(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('SELECT * FROM EstadoValidacion', function (err, result, fields) {
+                if (err)
+                    throw err;
+                res.json(result);
+            });
+        });
+    }
+    getTipoUsuario(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('SELECT * FROM TipoUsuario', function (err, result, fields) {
+                if (err)
+                    throw err;
+                res.json(result);
+            });
+        });
+    }
+    getTipoSeguridadSocial(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('SELECT * FROM TipoSeguridadSocial', function (err, result, fields) {
+                if (err)
+                    throw err;
+                res.json(result);
+            });
+        });
+    }
+    getExclusividad(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query(`SELECT exclusividad.FkTipoExclusividad, exclusividad.fechainicio, exclusividad.fechafinal, tipoexclusividad.Nombre FROM exclusividad,tipoexclusividad WHERE idExclusividad = ${req.params.idExclusividad}`, function (err, result, fields) {
+                if (err)
+                    throw err;
+                res.json(result);
+            });
+        });
+    }
+    getPais(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('SELECT * FROM pais', function (err, result, fields) {
+                if (err)
+                    throw err;
+                res.json(result);
+            });
+        });
+    }
+    getDepartamento(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query(`SELECT FechaInicio, FROM Exclusividad WHERE idExclusividad = ${req.params.idExclusividad}`, function (err, result, fields) {
+                if (err)
+                    throw err;
+                res.json(result);
+            });
+        });
+    }
+    getCiudad(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query(`SELECT FechaInicio, FROM Exclusividad WHERE idExclusividad = ${req.params.idExclusividad}`, function (err, result, fields) {
+                if (err)
+                    throw err;
+                res.json(result);
+            });
+        });
+    }
+    getFuncionTipoUsuario(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query(`SELECT FechaInicio, FROM Exclusividad WHERE idExclusividad = ${req.params.idExclusividad}`, function (err, result, fields) {
                 if (err)
                     throw err;
                 res.json(result);
