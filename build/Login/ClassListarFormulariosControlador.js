@@ -24,8 +24,12 @@ class ListarFormulariosControlador {
             });
         });
     }
+<<<<<<< HEAD
     ;
     getProfesion(req, res) {
+=======
+    GetProfesion(req, res) {
+>>>>>>> ff4e1e19d778dcca837910644b9eb7b64d845946
         return __awaiter(this, void 0, void 0, function* () {
             yield database_1.default.query('SELECT * FROM Profesion', function (err, result, fields) {
                 if (err)
@@ -34,7 +38,11 @@ class ListarFormulariosControlador {
             });
         });
     }
+<<<<<<< HEAD
     getEtnia(req, res) {
+=======
+    GetEtnia(req, res) {
+>>>>>>> ff4e1e19d778dcca837910644b9eb7b64d845946
         return __awaiter(this, void 0, void 0, function* () {
             yield database_1.default.query('SELECT * FROM ClasificacionEtnica', function (err, result, fields) {
                 if (err)
@@ -43,7 +51,11 @@ class ListarFormulariosControlador {
             });
         });
     }
+<<<<<<< HEAD
     getTipoIdentificacion(req, res) {
+=======
+    GetTipoIdentificacion(req, res) {
+>>>>>>> ff4e1e19d778dcca837910644b9eb7b64d845946
         return __awaiter(this, void 0, void 0, function* () {
             yield database_1.default.query('SELECT * FROM TipoIdentificacion', function (err, result, fields) {
                 if (err)
@@ -52,7 +64,11 @@ class ListarFormulariosControlador {
             });
         });
     }
+<<<<<<< HEAD
     getEstadoValidacion(req, res) {
+=======
+    GetEstadoValidacion(req, res) {
+>>>>>>> ff4e1e19d778dcca837910644b9eb7b64d845946
         return __awaiter(this, void 0, void 0, function* () {
             yield database_1.default.query('SELECT * FROM EstadoValidacion', function (err, result, fields) {
                 if (err)
@@ -61,7 +77,11 @@ class ListarFormulariosControlador {
             });
         });
     }
+<<<<<<< HEAD
     getTipoUsuario(req, res) {
+=======
+    GetTipoUsuario(req, res) {
+>>>>>>> ff4e1e19d778dcca837910644b9eb7b64d845946
         return __awaiter(this, void 0, void 0, function* () {
             yield database_1.default.query('SELECT * FROM TipoUsuario', function (err, result, fields) {
                 if (err)
@@ -70,7 +90,11 @@ class ListarFormulariosControlador {
             });
         });
     }
+<<<<<<< HEAD
     getTipoSeguridadSocial(req, res) {
+=======
+    GetTipoSeguridadSocial(req, res) {
+>>>>>>> ff4e1e19d778dcca837910644b9eb7b64d845946
         return __awaiter(this, void 0, void 0, function* () {
             yield database_1.default.query('SELECT * FROM TipoSeguridadSocial', function (err, result, fields) {
                 if (err)
@@ -79,6 +103,7 @@ class ListarFormulariosControlador {
             });
         });
     }
+<<<<<<< HEAD
     getExclusividad(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             yield database_1.default.query(`SELECT exclusividad.FkTipoExclusividad, exclusividad.fechainicio, exclusividad.fechafinal, tipoexclusividad.Nombre FROM exclusividad,tipoexclusividad WHERE idExclusividad = ${req.params.idExclusividad}`, function (err, result, fields) {
@@ -124,5 +149,7 @@ class ListarFormulariosControlador {
             });
         });
     }
+=======
+>>>>>>> ff4e1e19d778dcca837910644b9eb7b64d845946
 }
 exports.ObtListarFormulariosControlador = new ListarFormulariosControlador();

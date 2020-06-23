@@ -17,7 +17,7 @@ class ListarFormulariosControlador {
         await pool.query('SELECT * FROM Profesion', function (err, result, fields) {
             if (err) throw err;
             res.json(result);
-        });
+        }); 
 
     }
     public async getEtnia(req: Request, res: Response) {
