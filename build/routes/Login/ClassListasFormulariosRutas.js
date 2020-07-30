@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const ClassListarFormulariosControlador_1 = require("../../Controladores/Login/ClassListarFormulariosControlador");
-class ListasFormularios {
+class ListasFormulariosRutas {
     constructor() {
         this.router = express_1.Router();
         this.config();
@@ -24,5 +24,5 @@ class ListasFormularios {
         this.router.get('/api/list/TipoExclusividad', ClassListarFormulariosControlador_1.ObtListarFormulariosControlador.GetListTipoExclusividad);
     }
 }
-const ObtListasFormularios = new ListasFormularios();
-exports.default = ObtListasFormularios.router;
+const ObtListasFormulariosRutas = new ListasFormulariosRutas();
+exports.default = ObtListasFormulariosRutas.router;

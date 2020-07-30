@@ -4,8 +4,9 @@ import express,{Application} from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 
-import ObtEnviarCorreoRoutes from './routes/ClassEnviarCorreoRoutes';
-import ObtListasFormularios from "./routes/Login/ClassListasFormularios";
+import ObtEnviarCorreoRutas from './routes/EnviarCorreo/ClassEnviarCorreoRutas';
+import ObtListasFormulariosRutas from "./routes/Login/ClassListasFormulariosRutas";
+import ObtValidacionesRutas from "./routes/Validaciones/ClassValidacionesRutas";
 
 class Server {
 
@@ -27,8 +28,11 @@ class Server {
 
     routes():void{
 
-        this.app.use(ObtListasFormularios);
-        this.app.use(ObtEnviarCorreoRoutes);
+        this.app.use(ObtEnviarCorreoRutas);
+        this.app.use(ObtListasFormulariosRutas);
+        this.app.use(ObtValidacionesRutas);
+        
+        
 
     }
     

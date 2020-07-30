@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { ObtEnviarCorreoController } from '../Login/ClassEnviarCorreoController';
+import { ObtEnviarCorreoController } from '../../Controladores/EnviarCorreo/ClassEnviarCorreoController';
 
 class CorreoRoutes {
 
@@ -12,7 +12,7 @@ class CorreoRoutes {
         }
 
         config(): void {
-                this.router.put('/api/EnviarCorreo/:Correo', ObtEnviarCorreoController.EnviarCorreo);
+                this.router.put('/api/Validar/CorreoElectronico/:CorreoElectronico', ObtEnviarCorreoController.ValidarCorreo);
 
         }
 }

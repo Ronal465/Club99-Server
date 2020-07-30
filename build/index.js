@@ -7,8 +7,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const morgan_1 = __importDefault(require("morgan"));
-const ClassEnviarCorreoRoutes_1 = __importDefault(require("./routes/ClassEnviarCorreoRoutes"));
-const ClassListasFormularios_1 = __importDefault(require("./routes/Login/ClassListasFormularios"));
+const ClassEnviarCorreoRutas_1 = __importDefault(require("./routes/EnviarCorreo/ClassEnviarCorreoRutas"));
+const ClassListasFormulariosRutas_1 = __importDefault(require("./routes/Login/ClassListasFormulariosRutas"));
+const ClassValidacionesRutas_1 = __importDefault(require("./routes/Validaciones/ClassValidacionesRutas"));
 class Server {
     constructor() {
         this.app = express_1.default();
@@ -23,8 +24,9 @@ class Server {
         this.app.use(express_1.default.urlencoded({ extended: false })); // sirve para que se pueda usar en html pas peticiones
     }
     routes() {
-        this.app.use(ClassListasFormularios_1.default);
-        this.app.use(ClassEnviarCorreoRoutes_1.default);
+        this.app.use(ClassEnviarCorreoRutas_1.default);
+        this.app.use(ClassListasFormulariosRutas_1.default);
+        this.app.use(ClassValidacionesRutas_1.default);
     }
     start() {
         this.app.listen(this.app.get('port'), () => {
