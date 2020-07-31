@@ -24,6 +24,6 @@ export interface Usuario{
         idNivelAcademico        :number;
         idTipoUsuario           :number;
         idUbicacion             :number;
-        idFuncionarioPublico    :number;
+        idTipoPromotor          :number;
 
     }
