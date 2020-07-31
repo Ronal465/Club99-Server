@@ -4,8 +4,11 @@ export default{
         host: 'localhost', // esta ruta luego cambiara
         user: 'root',
         password: 'root', 
-        database: 'club99'   
+        database: 'club99',
+        port:3309  
     }
+   
+
 
   
 }  

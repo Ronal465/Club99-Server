@@ -7,6 +7,7 @@ import morgan from 'morgan';
 import ObtEnviarCorreoRutas from './routes/EnviarCorreo/ClassEnviarCorreoRutas';
 import ObtListasFormulariosRutas from "./routes/Login/ClassListasFormulariosRutas";
 import ObtValidacionesRutas from "./routes/Validaciones/ClassValidacionesRutas";
+import Authh  from "./routes/Login/auth";
 
 class Server {
 
