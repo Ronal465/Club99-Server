@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import pool from '../../database';
-
+import { ObtJWTValidacionesControlador } from "../../Controladores/Validaciones/JWTValidacionesControlador";
+import{encriptacion} from "../../Incriptacion/Bcrypts";
 class Auths{
 
     public async Login(req: Request, res: Response) {
@@ -9,9 +10,10 @@ class Auths{
 
         var login = {
             CorreoElectronico : req.body.CorreoElectronico,
-            Contrasena : req.body.Contrasena
+            Contrasena : await encriptacion.encriptar(req.body.Contrasena) 
         }  
         console.log(login);
+        console.log(login.Contrasena);
 
         const consultaempleado = await pool.query('SELECT idUsuario,Nombres,Apellidos,FechaNacimiento,idProfesion,idSeguridadSocial'+
                                                  ',idClasificacionEtnica,idTipoGenero,idExclusividad,idNivelAcademico,idTipoUsuario'+
@@ -22,7 +24,7 @@ class Auths{
             if (err) { throw err };
 
             if (result.length > 0) {
-                return res.json(result);
+                return res.json(ObtJWTValidacionesControlador.GetCrearTokenLogin(result));
             } else {
                 return res.json({ Estado: "fallo"});
             }
