@@ -44,8 +44,7 @@ class Auths{
          
         const {TokenLogin} = req.params;
 
-
-
+       res.json(ObtJWTValidacionesControlador.ValidarToken(TokenLogin));
 
     };
        

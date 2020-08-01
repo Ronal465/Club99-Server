@@ -12,7 +12,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Authsc = void 0;
 const database_1 = __importDefault(require("../../database"));
 const JWTValidacionesControlador_1 = require("../../Controladores/Validaciones/JWTValidacionesControlador");
 const Bcrypts_1 = require("../../Incriptacion/Bcrypts");
@@ -44,6 +43,7 @@ class Auths {
     ValidarTokenLogin(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { TokenLogin } = req.params;
+            res.json(JWTValidacionesControlador_1.ObtJWTValidacionesControlador.ValidarToken(TokenLogin));
         });
     }
     ;
