@@ -6,7 +6,7 @@ private bcrypt  = require('bcryptjs');
 //private salt =  this.bcrypt.genSaltSync(10);  Genera un Salt nuevo, pero cada vez que se reinicia el servidor cambia.
 
  
-private  salt =  "$2a$10$hNgsptL/.XAWLDNYVKjQa."; // Un salt por defecto para que genere siempre las mismas contraseña encriptadas
+private  salt =  "$VKjQa.2a$ptL/.XAWLD10$hNgsNY"; // Un salt por defecto para que genere siempre las mismas contraseña encriptadas
 
     constructor(){
 
