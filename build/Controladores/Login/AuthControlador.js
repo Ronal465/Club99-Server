@@ -15,12 +15,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Authsc = void 0;
 const database_1 = __importDefault(require("../../database"));
 class Auths {
-    Signup(req, res) {
+    Login(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield database_1.default.query('SELECT * FROM Profesion', function (err, result, fields) {
-                if (err)
+            var login = {
+                CorreoElectronico: req.body.CorreoElectronico,
+                Contrasena: req.body.Contrasena
+            };
+            console.log(login);
+            const consultaempleado = yield database_1.default.query('SELECT idUsuario,Nombres,Apellidos,FechaNacimiento,idProfesion,idSeguridadSocial' +
+                ',idClasificacionEtnica,idTipoGenero,idExclusividad,idNivelAcademico,idTipoUsuario' +
+                ',idUbicacion,idTipoPromotor FROM Usuario WHERE CorreoElectronico= ? and Contrasena=?', [login.CorreoElectronico, login.Contrasena], function (err, result, fields) {
+                if (err) {
                     throw err;
-                res.json(result);
+                }
+                ;
+                if (result.length > 0) {
+                    return res.json(result);
+                }
+                else {
+                    return res.json({ Estado: "fallo" });
+                }
             });
         });
     }

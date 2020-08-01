@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import { Authsc } from '../../Controladores/Login/AuthControlador';
 
-
 class Auth {
 
     public router: Router = Router();
@@ -11,7 +10,8 @@ class Auth {
 
     }
     config():void{
-
+        this.router.post('/api/Login/Login', Authsc.Login);
+               
     }
 }
 
