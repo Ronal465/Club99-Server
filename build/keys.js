@@ -6,6 +6,6 @@ exports.default = {
         user: 'root',
         password: 'root',
         database: 'club99',
-        port: 3309
+        port: 3306
     }
 };

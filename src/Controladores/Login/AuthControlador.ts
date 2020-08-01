@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import pool from '../../database';
 import { ObtJWTValidacionesControlador } from "../../Controladores/Validaciones/JWTValidacionesControlador";
 import { encriptacion } from "../../Incriptacion/Bcrypts";
+
 class Auths {
 
     public async Login(req: Request, res: Response) {
@@ -73,6 +74,23 @@ class Auths {
 
 
     }
+
+    public async ValidarTokenLogin(req: Request, res: Response) {
+         
+        const {TokenLogin} = req.params;
+
+       res.json(ObtJWTValidacionesControlador.ValidarToken(TokenLogin));
+
+    };
+       
+
+
+
+        
+       
+
+    
+
 
 }
 

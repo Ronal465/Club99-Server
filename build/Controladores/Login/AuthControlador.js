@@ -65,5 +65,12 @@ class Auths {
             });
         });
     }
+    ValidarTokenLogin(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { TokenLogin } = req.params;
+            res.json(JWTValidacionesControlador_1.ObtJWTValidacionesControlador.ValidarToken(TokenLogin));
+        });
+    }
+    ;
 }
 exports.Authsc = new Auths();

@@ -28,12 +28,12 @@ class JWTValidacionesControlador {
 
 
 
-    public ValidarToken(result: any){
+    public ValidarToken(TokenLogin: any){
 
         var jwt = require('jsonwebtoken')
         var bodyParser = require('body-parser')
 
-            var token = result.TokenLogin.headers['authorization']
+            var token = TokenLogin.TokenLogin.headers['authorization']
             if (!token) {
                 return {
                     Estado: "Fallo"

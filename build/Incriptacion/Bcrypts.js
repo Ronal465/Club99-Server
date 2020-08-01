@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.encriptacion = void 0;
 class Encriptacion {
     constructor() {
         this.bcrypt = require('bcryptjs');

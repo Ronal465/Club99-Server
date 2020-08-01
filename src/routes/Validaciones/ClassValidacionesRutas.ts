@@ -17,7 +17,7 @@ class ValidacionRutas {
 
                 //Ruta Para Obtener una lista de todos los generos registrados
                 this.router.get('/api/Validar/CorreoElectronico/:CorreoElectronico', ObtValidacionesControlador.GetValidarCorreoElectronico);
-                this.router.get('/api/Validar/:idUsuario/',ObtJWTValidacionesControlador.GetCrearTokenLogin);
+                
         }
 }
 
