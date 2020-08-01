@@ -11,7 +11,7 @@ class Auth {
     }
     config():void{
         this.router.post('/api/Login/Login', Authsc.Login);
-        this.router.get('/api/Validar/TokenLogin/:TokenLogin', Authsc.ValidarTokenLogin);  
+        this.router.post('/api/Validar/TokenLogin/', Authsc.ValidarTokenLogin);  
     }
 }
 

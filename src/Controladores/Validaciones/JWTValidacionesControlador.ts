@@ -33,7 +33,7 @@ class JWTValidacionesControlador {
         var jwt = require('jsonwebtoken')
         var bodyParser = require('body-parser')
 
-            var token = TokenLogin.TokenLogin.headers['authorization']
+            var token = TokenLogin.TokenLogin.header['authorization']
             if (!token) {
                 return {
                     Estado: "Fallo"
@@ -41,7 +41,7 @@ class JWTValidacionesControlador {
     
             }
           
-            token = token.replace('Bearer ', '')
+            token = TokenLogin.TokenLogin.replace('Bearer ', '')
           
             jwt.verify(token, Contrasena, function(err: any, token: any) {
               if (err) {

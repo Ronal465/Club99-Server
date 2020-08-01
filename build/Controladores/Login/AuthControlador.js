@@ -35,6 +35,7 @@ class Auths {
                     if (login.Contrasena == result[0].Contrasena) {
                         if (result[0].idEstadoValidacion == 1) {
                             var data = {
+                                headers: 'authorization',
                                 idUsuario: result[0].idUsuario,
                                 Nombres: result[0].Nombres,
                                 Apellidos: result[0].Apellidos,
@@ -67,8 +68,7 @@ class Auths {
     }
     ValidarTokenLogin(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { TokenLogin } = req.params;
-            res.json(JWTValidacionesControlador_1.ObtJWTValidacionesControlador.ValidarToken(TokenLogin));
+            res.json(JWTValidacionesControlador_1.ObtJWTValidacionesControlador.ValidarToken(req.body));
         });
     }
     ;

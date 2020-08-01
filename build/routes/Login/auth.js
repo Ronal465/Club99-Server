@@ -9,7 +9,7 @@ class Auth {
     }
     config() {
         this.router.post('/api/Login/Login', AuthControlador_1.Authsc.Login);
-        this.router.get('/api/Validar/TokenLogin/:TokenLogin', AuthControlador_1.Authsc.ValidarTokenLogin);
+        this.router.post('/api/Validar/TokenLogin/', AuthControlador_1.Authsc.ValidarTokenLogin);
     }
 }
 const Authh = new Auth();

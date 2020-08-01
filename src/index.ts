@@ -8,6 +8,7 @@ import ObtEnviarCorreoRutas from './routes/EnviarCorreo/ClassEnviarCorreoRutas';
 import ObtListasFormulariosRutas from "./routes/Login/ClassListasFormulariosRutas";
 import ObtValidacionesRutas from "./routes/Validaciones/ClassValidacionesRutas";
 import Authh  from "./routes/Login/auth";
+import Regis from "./routes/Login/Registrar";
 
 class Server {
 
@@ -33,6 +34,7 @@ class Server {
         this.app.use(ObtListasFormulariosRutas);
         this.app.use(ObtValidacionesRutas);
         this.app.use(Authh);
+        this.app.use(Regis);
         
         
 
