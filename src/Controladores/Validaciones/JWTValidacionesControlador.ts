@@ -43,7 +43,34 @@ class JWTValidacionesControlador {
 
 
 
+    public ValidarToken(result: any){
 
+        var jwt = require('jsonwebtoken')
+        var bodyParser = require('body-parser')
+
+            var token = result.TokenLogin.headers['authorization']
+            if (!token) {
+                return {
+                    Estado: "Fallo"
+                };
+    
+            }
+          
+            token = token.replace('Bearer ', '')
+          
+            jwt.verify(token, Contrasena, function(err: any, token: any) {
+              if (err) {
+                return {
+                    Estado: "Fallo"
+                };
+              } else {
+                return {
+                    Estado: "Correcto",
+                    TokenLogin: token
+                };
+              }});
+            
+    }
 
 
 
