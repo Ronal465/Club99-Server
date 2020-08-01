@@ -25,9 +25,6 @@ class Auths {
 
                 if (result.length > 0) {
 
-
-
-                    console.log(result);
                     if (login.Contrasena == result[0].Contrasena) {
                         if (result[0].idEstadoValidacion == 1) {
                             var data = {
@@ -45,7 +42,6 @@ class Auths {
                                 idTipoUsuario: result[0].idTipoUsuario,
                                 idUbicacion: result[0].idUbicacion,
                                 idTipoPromotor: result[0].idTipoPromotor
-
                             };
                             return res.json(ObtJWTValidacionesControlador.GetCrearTokenLogin(data));
 
