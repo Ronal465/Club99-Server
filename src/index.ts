@@ -32,6 +32,7 @@ class Server {
         this.app.use(ObtEnviarCorreoRutas);
         this.app.use(ObtListasFormulariosRutas);
         this.app.use(ObtValidacionesRutas);
+        this.app.use(Authh);
         
         
 

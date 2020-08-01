@@ -16,5 +16,4 @@ class Auth {
 }
 
     const Authh = new Auth();
-
     export default Authh.router;

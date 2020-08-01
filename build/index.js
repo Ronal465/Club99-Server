@@ -10,6 +10,7 @@ const morgan_1 = __importDefault(require("morgan"));
 const ClassEnviarCorreoRutas_1 = __importDefault(require("./routes/EnviarCorreo/ClassEnviarCorreoRutas"));
 const ClassListasFormulariosRutas_1 = __importDefault(require("./routes/Login/ClassListasFormulariosRutas"));
 const ClassValidacionesRutas_1 = __importDefault(require("./routes/Validaciones/ClassValidacionesRutas"));
+const auth_1 = __importDefault(require("./routes/Login/auth"));
 class Server {
     constructor() {
         this.app = express_1.default();
@@ -27,6 +28,7 @@ class Server {
         this.app.use(ClassEnviarCorreoRutas_1.default);
         this.app.use(ClassListasFormulariosRutas_1.default);
         this.app.use(ClassValidacionesRutas_1.default);
+        this.app.use(auth_1.default);
     }
     start() {
         this.app.listen(this.app.get('port'), () => {
