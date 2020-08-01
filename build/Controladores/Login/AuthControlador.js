@@ -23,8 +23,6 @@ class Auths {
                 CorreoElectronico: req.body.CorreoElectronico,
                 Contrasena: yield Bcrypts_1.encriptacion.encriptar(req.body.Contrasena)
             };
-            console.log(login);
-            console.log(login.Contrasena);
             const consultaempleado = yield database_1.default.query('SELECT idUsuario,Nombres,Apellidos,FechaNacimiento,idProfesion,idSeguridadSocial' +
                 ',idClasificacionEtnica,idTipoGenero,idExclusividad,idNivelAcademico,idTipoUsuario' +
                 ',idUbicacion,idTipoPromotor FROM Usuario WHERE CorreoElectronico= ? and Contrasena=?', [login.CorreoElectronico, login.Contrasena], function (err, result, fields) {

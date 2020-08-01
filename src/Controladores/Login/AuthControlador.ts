@@ -11,8 +11,7 @@ class Auths{
             CorreoElectronico : req.body.CorreoElectronico,
             Contrasena : await encriptacion.encriptar(req.body.Contrasena) 
         }  
-        console.log(login);
-        console.log(login.Contrasena);
+
 
         const consultaempleado = await pool.query('SELECT idUsuario,Nombres,Apellidos,FechaNacimiento,idProfesion,idSeguridadSocial'+
                                                  ',idClasificacionEtnica,idTipoGenero,idExclusividad,idNivelAcademico,idTipoUsuario'+
@@ -26,7 +25,7 @@ class Auths{
                 return res.json(ObtJWTValidacionesControlador.GetCrearTokenLogin(result));
             } else {
                 return res.json({ Estado: "fallo"});
-            }
+            }  
 
 
         });
