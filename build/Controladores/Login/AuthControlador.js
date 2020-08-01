@@ -12,15 +12,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Authsc = void 0;
 const database_1 = __importDefault(require("../../database"));
+const JWTValidacionesControlador_1 = require("../../Controladores/Validaciones/JWTValidacionesControlador");
+const Bcrypts_1 = require("../../Incriptacion/Bcrypts");
 class Auths {
     Login(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             var login = {
                 CorreoElectronico: req.body.CorreoElectronico,
-                Contrasena: req.body.Contrasena
+                Contrasena: yield Bcrypts_1.encriptacion.encriptar(req.body.Contrasena)
             };
             console.log(login);
+            console.log(login.Contrasena);
             const consultaempleado = yield database_1.default.query('SELECT idUsuario,Nombres,Apellidos,FechaNacimiento,idProfesion,idSeguridadSocial' +
                 ',idClasificacionEtnica,idTipoGenero,idExclusividad,idNivelAcademico,idTipoUsuario' +
                 ',idUbicacion,idTipoPromotor FROM Usuario WHERE CorreoElectronico= ? and Contrasena=?', [login.CorreoElectronico, login.Contrasena], function (err, result, fields) {
@@ -29,7 +33,7 @@ class Auths {
                 }
                 ;
                 if (result.length > 0) {
-                    return res.json(result);
+                    return res.json(JWTValidacionesControlador_1.ObtJWTValidacionesControlador.GetCrearTokenLogin(result));
                 }
                 else {
                     return res.json({ Estado: "fallo" });

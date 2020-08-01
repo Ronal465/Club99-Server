@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import pool from '../../database';
 
+
 const Contrasena = "Club99LoginRegister";
 
 class JWTValidacionesControlador {
@@ -8,7 +9,7 @@ class JWTValidacionesControlador {
 
 
     // Numero 16
-    public async GetCrearTokenLogin(result: any ): Promise<any>{
+    public  GetCrearTokenLogin(result: any) {
 
         var jwt = require('jsonwebtoken')
         var bodyParser = require('body-parser')
