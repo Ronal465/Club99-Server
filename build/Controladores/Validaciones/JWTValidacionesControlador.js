@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ObtJWTValidacionesControlador = void 0;
 const Contrasena = "Club99LoginRegister";
 class JWTValidacionesControlador {
     // Numero 16
@@ -19,7 +18,7 @@ class JWTValidacionesControlador {
     ValidarToken(TokenLogin) {
         var jwt = require('jsonwebtoken');
         var bodyParser = require('body-parser');
-        var token = TokenLogin.TokenLogin.headers['authorization'];
+        var token = TokenLogin.headers['authorization'];
         if (!token) {
             return {
                 Estado: "Fallo"

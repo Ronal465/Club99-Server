@@ -12,7 +12,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Authsc = void 0;
 const database_1 = __importDefault(require("../../database"));
 const JWTValidacionesControlador_1 = require("../../Controladores/Validaciones/JWTValidacionesControlador");
 const Bcrypts_1 = require("../../Incriptacion/Bcrypts");
@@ -31,7 +30,6 @@ class Auths {
                 }
                 ;
                 if (result.length > 0) {
-                    console.log(result);
                     if (login.Contrasena == result[0].Contrasena) {
                         if (result[0].idEstadoValidacion == 1) {
                             var data = {
