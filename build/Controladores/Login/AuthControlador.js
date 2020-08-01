@@ -37,5 +37,11 @@ class Auths {
             });
         });
     }
+    ValidarTokenLogin(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { TokenLogin } = req.params;
+        });
+    }
+    ;
 }
 exports.Authsc = new Auths();

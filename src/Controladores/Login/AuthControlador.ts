@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import pool from '../../database';
 
 class Auths{
+
     public async Login(req: Request, res: Response) {
          
         
@@ -36,6 +37,24 @@ class Auths{
        
 
     }
+
+    public async ValidarTokenLogin(req: Request, res: Response) {
+         
+        const {TokenLogin} = req.params;
+
+
+
+
+    };
+       
+
+
+
+        
+       
+
+    
+
 
 }
 
