@@ -12,6 +12,7 @@ const ClassListasFormulariosRutas_1 = __importDefault(require("./routes/Login/Cl
 const ClassValidacionesRutas_1 = __importDefault(require("./routes/Validaciones/ClassValidacionesRutas"));
 const auth_1 = __importDefault(require("./routes/Login/auth"));
 const Registrar_1 = __importDefault(require("./routes/Login/Registrar"));
+const ClassInicioRutas_1 = __importDefault(require("./routes/Inicio/ClassInicioRutas"));
 class Server {
     constructor() {
         this.app = express_1.default();
@@ -31,6 +32,7 @@ class Server {
         this.app.use(ClassValidacionesRutas_1.default);
         this.app.use(auth_1.default);
         this.app.use(Registrar_1.default);
+        this.app.use(ClassInicioRutas_1.default);
     }
     start() {
         this.app.listen(this.app.get('port'), () => {

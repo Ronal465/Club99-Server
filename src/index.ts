@@ -9,6 +9,7 @@ import ObtListasFormulariosRutas from "./routes/Login/ClassListasFormulariosRuta
 import ObtValidacionesRutas from "./routes/Validaciones/ClassValidacionesRutas";
 import Authh  from "./routes/Login/auth";
 import Regis from "./routes/Login/Registrar";
+import ObtInicioRuta  from "./routes/Inicio/ClassInicioRutas";
 
 class Server {
 
@@ -35,10 +36,11 @@ class Server {
         this.app.use(ObtValidacionesRutas);
         this.app.use(Authh);
         this.app.use(Regis);
-        
+        this.app.use(ObtInicioRuta);
+         
         
 
-    }
+    } 
     
     start():void{
         this.app.listen(this.app.get('port'),()=>{

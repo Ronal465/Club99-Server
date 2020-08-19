@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ObtEnviarCorreoController = void 0;
 class EnviarCorreoController {
     constructor() {
         this.Correo = "proyectocelutel@gmail.com";
