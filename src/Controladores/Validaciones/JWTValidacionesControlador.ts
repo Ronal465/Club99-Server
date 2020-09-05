@@ -11,7 +11,7 @@ class JWTValidacionesControlador {
     // Numero 16
     public  GetCrearTokenLogin(result: any) {
 
-        var jwt = require('jsonwebtoken')
+        var jwt = require('jsonwebtoken');
         var bodyParser = require('body-parser')
 
         var tokenData = result;
@@ -28,43 +28,27 @@ class JWTValidacionesControlador {
 
 
 
-    public ValidarToken(TokenLogin: any){
-
-        var jwt = require('jsonwebtoken')
-        var bodyParser = require('body-parser')
 
 
-            var token = TokenLogin.TokenLogin.header['authorization']
+     public async Verificar(req: Request, res: Response) {
 
-            var token = TokenLogin.headers['authorization']
+        const jwt = require('jsonwebtoken');
+        const jwtDecode = require('jwt-decode');
 
-            if (!token) {
-                return {
-                    Estado: "Fallo"
-                };
-    
-            }
-          
-            token = TokenLogin.TokenLogin.replace('Bearer ', '')
-          
-            jwt.verify(token, Contrasena, function(err: any, token: any) {
-              if (err) {
-                return {
-                    Estado: "Fallo"
-                };
-              } else {
-                return {
-                    Estado: "Correcto",
-                    TokenLogin: token
-                };
-              }});
+        try {
             
+           var token = jwt.verify(req.body.TokenLogin, Contrasena);
+           var decoded = jwtDecode(req.body.TokenLogin);
+            res.json({ Estado: "Correcto",
+            idTipoUsuario: decoded.idTipoUsuario});
+
+         } catch(err) {
+           
+            res.json({ Estado: "Fallo"});
+    
+         }
+
     }
-
-
-
-
-
 
 }
 

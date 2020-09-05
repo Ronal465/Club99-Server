@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { Authsc } from '../../Controladores/Login/AuthControlador';
+import { ObtJWTValidacionesControlador } from "../../Controladores/Validaciones/JWTValidacionesControlador";
 
 class Auth {
 
@@ -11,7 +12,7 @@ class Auth {
     }
     config():void{
         this.router.post('/api/Login/Login', Authsc.Login);
-        this.router.post('/api/Validar/TokenLogin/', Authsc.ValidarTokenLogin);  
+        this.router.post('/api/Validar/TokenLogin/',ObtJWTValidacionesControlador.Verificar );  
     }
 }
 

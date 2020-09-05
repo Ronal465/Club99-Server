@@ -23,53 +23,62 @@ class Auths {
                 CorreoElectronico: req.body.CorreoElectronico,
                 Contrasena: yield Bcrypts_1.encriptacion.encriptar(req.body.Contrasena)
             };
-            const consultUsuarioLogin = yield database_1.default.query('SELECT idUsuario,Nombres,Apellidos,FechaNacimiento,idProfesion,idSeguridadSocial' +
-                ',idClasificacionEtnica,idTipoGenero,idExclusividad,idNivelAcademico,idTipoUsuario' +
-                ',idUbicacion,idTipoPromotor,idEstadoValidacion,Contrasena FROM Usuario WHERE CorreoElectronico= ? ', [login.CorreoElectronico], function (err, result, fields) {
-                if (err) {
-                    throw err;
-                }
-                ;
-                if (result.length > 0) {
-                    if (login.Contrasena == result[0].Contrasena) {
-                        if (result[0].idEstadoValidacion == 1) {
-                            var data = {
-                                headers: 'authorization',
-                                idUsuario: result[0].idUsuario,
-                                Nombres: result[0].Nombres,
-                                Apellidos: result[0].Apellidos,
-                                FechaNacimiento: result[0].FechaNacimiento,
-                                idProfesion: result[0].idProfesion,
-                                idSeguridadSocial: result[0].idSeguridadSocial,
-                                idClasificacionEtnica: result[0].idClasificacionEtnica,
-                                idTipoGenero: result[0].idTipoGenero,
-                                idExclusividad: result[0].idExclusividad,
-                                idNivelAcademico: result[0].idNivelAcademico,
-                                idTipoUsuario: result[0].idTipoUsuario,
-                                idUbicacion: result[0].idUbicacion,
-                                idTipoPromotor: result[0].idTipoPromotor
-                            };
-                            return res.json(JWTValidacionesControlador_1.ObtJWTValidacionesControlador.GetCrearTokenLogin(data));
-                        }
-                        else {
-                            return res.json({ Estado: "Bloqueado" });
-                        }
+            const consultUsuarioLogin = yield database_1.default.query('SELECT idUsuario,Nombres,Apellidos,FechaNacimiento,idProfesion' +
+                ',idClasificacionEtnica,idTipoGenero,idNivelAcademico,idTipoUsuario' +
+                ',idTipoPromotor,idEstadoValidacion,Contrasena FROM Usuario WHERE CorreoElectronico= ? ', [login.CorreoElectronico], function (err, result, fields) {
+                return __awaiter(this, void 0, void 0, function* () {
+                    if (err) {
+                        throw err;
+                    }
+                    ;
+                    if (result.length > 0) {
+                        var idUbicacion;
+                        var idExclusividad;
+                        yield database_1.default.query('SELECT idUbicacion FROM ubicacion WHERE idUsuario = ? ', [result[0].idUsuario], function (err, resulta, fields) {
+                            return __awaiter(this, void 0, void 0, function* () {
+                                if (err)
+                                    throw err;
+                                yield database_1.default.query('SELECT idExclusividad FROM exclusividad WHERE idUsuario = ? ', [result[0].idUsuario], function (err, resultad, fields) {
+                                    if (err)
+                                        throw err;
+                                    idExclusividad = resultad[0].idExclusividad;
+                                    idUbicacion = resulta[0].idUbicacion;
+                                    if (login.Contrasena == result[0].Contrasena) {
+                                        if (result[0].idEstadoValidacion == 1) {
+                                            var data = {
+                                                idUsuario: result[0].idUsuario,
+                                                Nombres: result[0].Nombres,
+                                                Apellidos: result[0].Apellidos,
+                                                FechaNacimiento: result[0].FechaNacimiento,
+                                                idProfesion: result[0].idProfesion,
+                                                idClasificacionEtnica: result[0].idClasificacionEtnica,
+                                                idTipoGenero: result[0].idTipoGenero,
+                                                idExclusividad: idUbicacion,
+                                                idNivelAcademico: result[0].idNivelAcademico,
+                                                idTipoUsuario: result[0].idTipoUsuario,
+                                                idUbicacion: idUbicacion,
+                                                idTipoPromotor: result[0].idTipoPromotor
+                                            };
+                                            console.log(JWTValidacionesControlador_1.ObtJWTValidacionesControlador.GetCrearTokenLogin(data));
+                                            return res.json(JWTValidacionesControlador_1.ObtJWTValidacionesControlador.GetCrearTokenLogin(data));
+                                        }
+                                        else {
+                                            return res.json({ Estado: "Bloqueado" });
+                                        }
+                                    }
+                                    else {
+                                        return res.json({ Estado: "FalloContraseña" });
+                                    }
+                                });
+                            });
+                        });
                     }
                     else {
-                        return res.json({ Estado: "FalloContraseña" });
+                        return res.json({ Estado: "FalloCorreo" });
                     }
-                }
-                else {
-                    return res.json({ Estado: "FalloCorreo" });
-                }
+                });
             });
         });
     }
-    ValidarTokenLogin(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            res.json(JWTValidacionesControlador_1.ObtJWTValidacionesControlador.ValidarToken(req.body));
-        });
-    }
-    ;
 }
 exports.Authsc = new Auths();

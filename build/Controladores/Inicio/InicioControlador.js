@@ -21,9 +21,19 @@ class InicioControlador {
                 res.json({ "Mensaje": "Hola" });
             }
             else if (req.body.idUsuario) {
-                const ConsulListCursos = yield database_1.default.query('Select * from Curso where idCurso = ' +
-                    '(Select idCurso from FiltroCurso where idFiltro = ' +
-                    '(Select idFiltro FROM TipoFiltro WHERE idTipoFiltro = 1))', [], function (err, result, fields) {
+                var TokenLogin = req.body;
+                var ListaCursos = [];
+                const ListaGratis = yield database_1.default.query('Select * from Curso where idCurso = ' +
+                    '(Select idCurso from FiltroCurso where idFiltro = ? and idTipoFiltro = 1', [req.body.idClasificacionEtnica], function (err, result, fields) {
+                    ListaCursos.push(res);
+                });
+                const ListaExclusivos = yield database_1.default.query('Select * from Curso where idCurso = ' +
+                    '(Select idCurso from FiltroCurso where idFiltro = ? and idTipoFiltro = 2', [req.body.idExclusividad], function (err, result, fields) {
+                    ListaCursos.push(res);
+                });
+                const ListaEtnias = yield database_1.default.query('Select * from Curso where idCurso = ' +
+                    '(Select idCurso from FiltroCurso where idFiltro = ? and idTipoFiltro = 3', [req.body.idClasificacionEtnica], function (err, result, fields) {
+                    ListaCursos.push(res);
                 });
             }
             else {
