@@ -12,8 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ObtEnviarCorreoController = void 0;
 class EnviarCorreoController {
     constructor() {
-        this.Correo = "proyectocelutel@gmail.com";
-        this.Contrasena = "Celutel2019*";
+        this.Correo = "produccionclub99@gmail.com";
+        this.Contrasena = "Administrador123";
     }
     ValidarCorreo(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -48,9 +48,8 @@ class EnviarCorreoController {
             });
         });
     }
-    RecuperarContraseña(req, res) {
+    CrearUsuarioCorreo(TokenRegisterDone, CorreoElectronico) {
         return __awaiter(this, void 0, void 0, function* () {
-            var StrContrasenaNueva = req.body.StrContrasenaNueva;
             var nodemailer = require('nodemailer');
             // create reusable transporter object using the default SMTP transport
             // var transporter = nodemailer.createTransport('smtps://proyectocelutel@gmail.com:Celutel2019*');
@@ -59,20 +58,17 @@ class EnviarCorreoController {
                 port: 587,
                 secure: false,
                 auth: {
-                    user: "",
-                    pass: ""
+                    user: this.Correo,
+                    pass: this.Contrasena,
                 }
             });
-            // setup e-mail data with unicode symbols
-            const { Correo } = req.params;
             var mailOptions = {
-                from: 'proyectocelutel@gmail.com',
-                to: '' + Correo,
+                from: this.Correo,
+                to: '' + CorreoElectronico,
                 subject: 'Objetivo ',
                 text: 'Texto De Ejemplo',
-                html: `<p>Su Nueva Contraseña Es:</p><p>${StrContrasenaNueva}</p>` // html body
+                html: `<p>Su Link Para entrar Es http://localhost:4200/ValidacionCorreoRegistro/${TokenRegisterDone} </p>` // html body
             };
-            res.json({ Message: 'Correo Enviado' });
             // send mail with defined transport object
             yield transporter.sendMail(mailOptions, function (error, info) {
                 if (error) {
@@ -80,6 +76,38 @@ class EnviarCorreoController {
                 }
                 console.log('Message sent: ' + info.response);
             });
+            return {};
+        });
+    }
+    RecuperarContraseña(TokenRecuperarContrasenaDone, CorreoElectronico) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var nodemailer = require('nodemailer');
+            // create reusable transporter object using the default SMTP transport
+            // var transporter = nodemailer.createTransport('smtps://proyectocelutel@gmail.com:Celutel2019*');
+            var transporter = nodemailer.createTransport({
+                host: "smtp.gmail.com",
+                port: 587,
+                secure: false,
+                auth: {
+                    user: this.Correo,
+                    pass: this.Contrasena,
+                }
+            });
+            var mailOptions = {
+                from: this.Correo,
+                to: '' + CorreoElectronico,
+                subject: 'Objetivo ',
+                text: 'Texto De Ejemplo',
+                html: `<p>Su Link Para entrar Es http://localhost:4200/RecuperarContrasena/${TokenRecuperarContrasenaDone} </p>` // html body
+            };
+            // send mail with defined transport object
+            yield transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                    return { Estado: "Fallo" };
+                }
+                console.log('Message sent: ' + info.response);
+            });
+            return { Estado: "Correcto" };
         });
     }
 }

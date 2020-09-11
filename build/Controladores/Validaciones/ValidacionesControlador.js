@@ -16,19 +16,36 @@ exports.ObtValidacionesControlador = void 0;
 const database_1 = __importDefault(require("../../database"));
 class ValidacionesControlador {
     // Numero 16
-    GetValidarCorreoElectronico(req, res) {
+    PostValidarCorreoElectronico(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { CorreoElectronico } = req.params;
+            const CorreoElectronico = req.body.CorreoElectronico;
             const consultaempleado = yield database_1.default.query('SELECT CorreoElectronico FROM Usuario WHERE CorreoElectronico= ?', [CorreoElectronico], function (err, result, fields) {
                 if (err) {
                     throw err;
                 }
                 ;
                 if (result.length > 0) {
-                    res.json({ Estado: "Correcto" });
+                    res.json({ Estado: "fallo" });
                 }
                 else {
-                    res.status(404).json({ Estado: "Fallo" });
+                    res.json({ Estado: "Correcto" });
+                }
+            });
+        });
+    }
+    PostValidarIdentificacion(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const NumeroIdentificacion = req.body.NumeroIdentificacion;
+            const consultaempleado = yield database_1.default.query('SELECT NumeroIdentificacion FROM Usuario WHERE NumeroIdentificacion= ?', [NumeroIdentificacion], function (err, result, fields) {
+                if (err) {
+                    throw err;
+                }
+                ;
+                if (result.length > 0) {
+                    res.json({ Estado: "fallo" });
+                }
+                else {
+                    res.json({ Estado: "Correcto" });
                 }
             });
         });

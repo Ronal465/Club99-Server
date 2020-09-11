@@ -35,10 +35,10 @@ class ListarFormulariosControlador {
             });
         });
     }
-    // Numero 18
-    GetListEtnia(req, res) {
+    // Numero 3
+    GetListNivelAcademico(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield database_1.default.query('SELECT * FROM ClasificacionEtnica', function (err, result, fields) {
+            yield database_1.default.query('SELECT * FROM nivelacademico', function (err, result, fields) {
                 if (err)
                     throw err;
                 res.json(result);
@@ -164,6 +164,16 @@ class ListarFormulariosControlador {
     GetListTipoExclusividad(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             yield database_1.default.query('SELECT * FROM TipoExclusividad', function (err, result, fields) {
+                if (err)
+                    throw err;
+                res.json(result);
+            });
+        });
+    }
+    // Numero 18
+    GetListEtnia(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('SELECT * FROM ClasificacionEtnica', function (err, result, fields) {
                 if (err)
                     throw err;
                 res.json(result);

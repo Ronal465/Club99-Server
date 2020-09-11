@@ -10,7 +10,7 @@ class Auth {
     }
     config() {
         this.router.post('/api/Login/Login', AuthControlador_1.Authsc.Login);
-        this.router.post('/api/Validar/TokenLogin/', JWTValidacionesControlador_1.ObtJWTValidacionesControlador.Verificar);
+        this.router.post('/api/Validar/TokenLogin/', JWTValidacionesControlador_1.ObtJWTValidacionesControlador.VerificarLogin);
     }
 }
 const Authh = new Auth();

@@ -12,7 +12,7 @@ class Auth {
     }
     config():void{
         this.router.post('/api/Login/Login', Authsc.Login);
-        this.router.post('/api/Validar/TokenLogin/',ObtJWTValidacionesControlador.Verificar );  
+        this.router.post('/api/Validar/TokenLogin/',ObtJWTValidacionesControlador.VerificarLogin );  
     }
 }
 

@@ -10,7 +10,7 @@ class ListarFormulariosControlador {
         await pool.query('SELECT * FROM Profesion', function (err, result, fields) {
             if (err) throw err;
             res.json(result);
-        }); 
+        });
 
     }
 
@@ -23,10 +23,11 @@ class ListarFormulariosControlador {
         });
 
     }
-     // Numero 18
-    public async GetListEtnia(req: Request, res: Response) {
 
-        await pool.query('SELECT * FROM ClasificacionEtnica', function (err, result, fields) {
+    // Numero 3
+    public async GetListNivelAcademico(req: Request, res: Response) {
+
+        await pool.query('SELECT * FROM nivelacademico', function (err, result, fields) {
             if (err) throw err;
             res.json(result);
         });
@@ -129,14 +130,14 @@ class ListarFormulariosControlador {
 
         const { idTipoUsuario } = req.params;
 
-        
+
         const consultaempleado = await pool.query('SELECT idFuncionTipoUsuario,Nombre FROM FuncionTipoUsuario WHERE idTipoUsuario= ?', [idTipoUsuario], function (err, result, fields) {
-            
+
             if (err) { throw err };
 
             if (result.length > 0) {
-                
-                var JSonAcomodado = result ;
+
+                var JSonAcomodado = result;
 
                 res.json(result);
 
@@ -170,8 +171,16 @@ class ListarFormulariosControlador {
 
     }
 
-    
-     
+
+    // Numero 18
+    public async GetListEtnia(req: Request, res: Response) {
+
+        await pool.query('SELECT * FROM ClasificacionEtnica', function (err, result, fields) {
+            if (err) throw err;
+            res.json(result);
+        });
+
+    }
 
 
 }

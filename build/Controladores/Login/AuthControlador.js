@@ -44,7 +44,7 @@ class Auths {
                                     idExclusividad = resultad[0].idExclusividad;
                                     idUbicacion = resulta[0].idUbicacion;
                                     if (login.Contrasena == result[0].Contrasena) {
-                                        if (result[0].idEstadoValidacion == 1) {
+                                        if (result[0].idEstadoValidacion == 1 || result[0].idEstadoValidacion == 2) {
                                             var data = {
                                                 idUsuario: result[0].idUsuario,
                                                 Nombres: result[0].Nombres,

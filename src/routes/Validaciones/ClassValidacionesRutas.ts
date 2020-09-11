@@ -15,8 +15,12 @@ class ValidacionRutas {
 
         config(): void {
 
-                //Ruta Para Obtener una lista de todos los generos registrados
-                this.router.get('/api/Validar/CorreoElectronico/:CorreoElectronico', ObtValidacionesControlador.GetValidarCorreoElectronico);
+                //Ruta Para Obtener una estado de si un correo esta  registrado
+                this.router.post('/api/Validar/CorreoElectronico/', ObtValidacionesControlador.PostValidarCorreoElectronico);
+                this.router.post('/api/Validar/Identificacion/', ObtValidacionesControlador.PostValidarIdentificacion);
+                this.router.post('/api/Validar/Token/CambiarContrasena/',ObtJWTValidacionesControlador.VerificarRecuperarContrasena);
+                this.router.post('/api/Validar/Token/Register/',ObtJWTValidacionesControlador.VerificarCrearUsuario);
+
                 
         }
 }
