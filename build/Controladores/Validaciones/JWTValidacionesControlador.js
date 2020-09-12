@@ -62,6 +62,19 @@ class JWTValidacionesControlador {
             return decoded;
         }
     }
+    VerificarLoginToken(Token) {
+        const jwt = require('jsonwebtoken');
+        const jwtDecode = require('jwt-decode');
+        try {
+            var token = jwt.verify(Token, Contrasena);
+            var decoded = jwtDecode(Token);
+            return decoded;
+        }
+        catch (err) {
+            decoded = {};
+            return decoded;
+        }
+    }
     VerificarRecuperar(Token) {
         const jwt = require('jsonwebtoken');
         const jwtDecode = require('jwt-decode');

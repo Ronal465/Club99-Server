@@ -75,6 +75,24 @@ class JWTValidacionesControlador {
          }
 
     }
+    public VerificarLoginToken(Token:any){
+      const jwt = require('jsonwebtoken');
+      const jwtDecode = require('jwt-decode');
+
+      try {
+          
+         var token = jwt.verify(Token, Contrasena);
+         var decoded = jwtDecode(Token);
+          return decoded;
+
+       } catch(err) {
+          decoded = {};
+
+          return decoded;
+  
+       }
+
+  }
     public VerificarRecuperar(Token:any){
         const jwt = require('jsonwebtoken');
         const jwtDecode = require('jwt-decode');
@@ -133,24 +151,24 @@ class JWTValidacionesControlador {
        }
 
   }
-  public async VerificarCrearUsuario(req: Request, res: Response) {
+   public async VerificarCrearUsuario(req: Request, res: Response) {
 
 
-   const jwt = require('jsonwebtoken');
+      const jwt = require('jsonwebtoken');
 
-   try {
-       
-      var token = jwt.verify(req.body.TokenRegister, ContrasenaRegister);
-      
-       res.json({ Estado: "Correcto"});
+      try {
+         
+         var token = jwt.verify(req.body.TokenRegister, ContrasenaRegister);
+         
+         res.json({ Estado: "Correcto"});
 
-    } catch(err) {
-      
-       res.json({ Estado: "Fallo"});
+      } catch(err) {
+         
+         res.json({ Estado: "Fallo"});
 
-    }
+      }
 
-}
+   }
 
 }
 

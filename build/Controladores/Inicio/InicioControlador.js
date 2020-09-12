@@ -14,27 +14,50 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ObtInicioControlador = void 0;
 const database_1 = __importDefault(require("../../database"));
+const JWTValidacionesControlador_1 = require("../Validaciones/JWTValidacionesControlador");
 class InicioControlador {
     ListCursos(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (req.body.Estado == "NoLogueado") {
+            var ListaCursos = [];
+            if (req.body.TokenLogin == undefined) {
                 res.json({ "Mensaje": "Hola" });
             }
-            else if (req.body.idUsuario) {
-                var TokenLogin = req.body;
-                var ListaCursos = [];
-                const ListaGratis = yield database_1.default.query('Select * from Curso where idCurso = ' +
-                    '(Select idCurso from FiltroCurso where idFiltro = ? and idTipoFiltro = 1', [req.body.idClasificacionEtnica], function (err, result, fields) {
-                    ListaCursos.push(res);
+            else if (req.body.TokenLogin = !undefined) {
+                var TokenLogin = JWTValidacionesControlador_1.ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
+                const ListaGratis = yield database_1.default.query('Select * from Curso where idCurso in' +
+                    '(Select idCurso from FiltroCurso where idFiltro = 0 and idTipoFiltro = 1)', function (err, resultGratis, fields) {
+                    return __awaiter(this, void 0, void 0, function* () {
+                        yield resultGratis.forEach((Curso) => __awaiter(this, void 0, void 0, function* () {
+                            const consultProfesor = yield database_1.default.query('SELECT idUsuario,Nombres,Apellidos FROM Usuario WHERE idUsuario = ?', [Curso.idProfesor], function (err, Profesor, fields) {
+                                return __awaiter(this, void 0, void 0, function* () {
+                                    const consultProfesor = yield database_1.default.query('SELECT idFiltroCurso,idTipoFiltro,idFiltro FROM filtrocurso WHERE idCurso = ?', [Curso.idCurso], function (err, Filtros, fields) {
+                                        return __awaiter(this, void 0, void 0, function* () {
+                                            ListaCursos.push({
+                                                Curso,
+                                                Profesor,
+                                                Filtros
+                                            });
+                                            ListaCursos.push({
+                                                Curso,
+                                                Profesor,
+                                                Filtros
+                                            });
+                                            res.json(ListaCursos);
+                                        });
+                                    });
+                                });
+                            });
+                        }));
+                    });
                 });
-                const ListaExclusivos = yield database_1.default.query('Select * from Curso where idCurso = ' +
-                    '(Select idCurso from FiltroCurso where idFiltro = ? and idTipoFiltro = 2', [req.body.idExclusividad], function (err, result, fields) {
-                    ListaCursos.push(res);
-                });
-                const ListaEtnias = yield database_1.default.query('Select * from Curso where idCurso = ' +
-                    '(Select idCurso from FiltroCurso where idFiltro = ? and idTipoFiltro = 3', [req.body.idClasificacionEtnica], function (err, result, fields) {
-                    ListaCursos.push(res);
-                });
+                // const ListaExclusivos = await pool.query('Select * from Curso where idCurso = '+
+                // '(Select idCurso from FiltroCurso where idFiltro = ? and idTipoFiltro = 2' , [req.body.idExclusividad], function (err, result, fields) {
+                // ListaCursos.push(res);
+                // });
+                // const ListaEtnias = await pool.query('Select * from Curso where idCurso = '+
+                // '(Select idCurso from FiltroCurso where idFiltro = ? and idTipoFiltro = 3' , [req.body.idClasificacionEtnica], function (err, result, fields) {
+                // ListaCursos.push(res);
+                // });
             }
             else {
                 res.json({ "Estado": "FalloJson" });

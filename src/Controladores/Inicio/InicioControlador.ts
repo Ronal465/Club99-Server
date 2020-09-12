@@ -5,52 +5,72 @@ import { encriptacion } from "../../Incriptacion/Bcrypts";
 
 class InicioControlador {
 
+
     public async ListCursos(req: Request, res: Response) {
+      var  ListaCursos: any = [];
 
-     if(req.body.Estado == "NoLogueado"){
+        if (req.body.TokenLogin == undefined) {
 
-        res.json({"Mensaje": "Hola"});
+            res.json({ "Mensaje": "Hola" });
 
-     }else if(req.body.idUsuario){ 
-        
+        } else if (req.body.TokenLogin = !undefined) {
 
-       var TokenLogin = req.body;
-       var ListaCursos = [];
+            var TokenLogin = ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
+
+            const ListaGratis = await pool.query('Select * from Curso where idCurso in' +
+                '(Select idCurso from FiltroCurso where idFiltro = 0 and idTipoFiltro = 1)', async function (err, resultGratis, fields) {
+
+                    await resultGratis.forEach(async (Curso: any) => {
+
+                        const consultProfesor = await pool.query('SELECT idUsuario,Nombres,Apellidos FROM Usuario WHERE idUsuario = ?', [Curso.idProfesor], async function (err, Profesor, fields) {
+
+                            const consultProfesor = await pool.query('SELECT idFiltroCurso,idTipoFiltro,idFiltro FROM filtrocurso WHERE idCurso = ?', [Curso.idCurso], async function (err, Filtros, fields) {
+                          
+                            ListaCursos.push({
+                                    Curso,
+                                    Profesor,
+                                    Filtros
+                                });
+                                ListaCursos.push({
+                                    Curso,
+                                    Profesor,
+                                    Filtros
+                                });
+                                res.json(ListaCursos);
+                            });
+                        });
+                    });
+                });
+
+                
+
+               
+
+            // const ListaExclusivos = await pool.query('Select * from Curso where idCurso = '+
+            // '(Select idCurso from FiltroCurso where idFiltro = ? and idTipoFiltro = 2' , [req.body.idExclusividad], function (err, result, fields) {
+
+            // ListaCursos.push(res);
+
+            // });
+
+            // const ListaEtnias = await pool.query('Select * from Curso where idCurso = '+
+            // '(Select idCurso from FiltroCurso where idFiltro = ? and idTipoFiltro = 3' , [req.body.idClasificacionEtnica], function (err, result, fields) {
+
+            // ListaCursos.push(res);
+
+            // });
 
 
-       const ListaGratis = await pool.query('Select * from Curso where idCurso = '+
-       '(Select idCurso from FiltroCurso where idFiltro = ? and idTipoFiltro = 1' , [req.body.idClasificacionEtnica], function (err, result, fields) {
-
-        ListaCursos.push(res);
-
-
-       });
-
-        const ListaExclusivos = await pool.query('Select * from Curso where idCurso = '+
-        '(Select idCurso from FiltroCurso where idFiltro = ? and idTipoFiltro = 2' , [req.body.idExclusividad], function (err, result, fields) {
-        
-        ListaCursos.push(res);
-
-        });
-
-        const ListaEtnias = await pool.query('Select * from Curso where idCurso = '+
-        '(Select idCurso from FiltroCurso where idFiltro = ? and idTipoFiltro = 3' , [req.body.idClasificacionEtnica], function (err, result, fields) {
-        
-        ListaCursos.push(res);
-        
-        });
-
- 
 
 
 
 
 
 
-     }else{
-         res.json({"Estado": "FalloJson"});
-     }
-          
+        } else {
+            res.json({ "Estado": "FalloJson" });
+        }
+
 
 
         // const consultUsuarioLogin = await pool.query('SELECT idUsuario,Nombres,Apellidos,FechaNacimiento,idProfesion,idSeguridadSocial' +
@@ -112,14 +132,14 @@ class InicioControlador {
 
 
 
-       
 
- 
 
-        
-       
 
-    
+
+
+
+
+
 
 
 }
