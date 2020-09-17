@@ -1,35 +1,40 @@
 // imports nescesarios para montar el servidor
 
-import express,{Application} from 'express';
+import express, { Application } from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
+
 
 import ObtEnviarCorreoRutas from './routes/EnviarCorreo/ClassEnviarCorreoRutas';
 import ObtListasFormulariosRutas from "./routes/Login/ClassListasFormulariosRutas";
 import ObtValidacionesRutas from "./routes/Validaciones/ClassValidacionesRutas";
-import Authh  from "./routes/Login/auth";
+import Authh from "./routes/Login/auth";
 import Regis from "./routes/Login/Registrar";
-import ObtInicioRuta  from "./routes/Inicio/ClassInicioRutas";
+import ObtInicioRuta from "./routes/Inicio/ClassInicioRutas";
+import ObtAWS from "./routes/AWS/AWSRutas";
+const multer  = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 class Server {
 
-    public app : Application;
+    public app: Application;
 
-    constructor(){
+    constructor() {
         this.app = express();
         this.config();
         this.routes();
     }
- 
-    config():void{
+
+    config(): void {
         this.app.set('port', process.env.PORT || 3000);
         this.app.use(morgan('dev'));    // sirve para que lea las peticiones
         this.app.use(cors());
         this.app.use(express.json()); // sirve para que cuando angular le mande un .json lo entienda
-        this.app.use(express.urlencoded({extended:false})); // sirve para que se pueda usar en html pas peticiones
+        this.app.use(express.urlencoded({ extended: false })); // sirve para que se pueda usar en html pas peticiones
+
     }
 
-    routes():void{
+    routes(): void {
 
         this.app.use(ObtEnviarCorreoRutas);
         this.app.use(ObtListasFormulariosRutas);
@@ -37,13 +42,13 @@ class Server {
         this.app.use(Authh);
         this.app.use(Regis);
         this.app.use(ObtInicioRuta);
-         
-        
+        this.app.use(ObtAWS);
 
-    } 
-    
-    start():void{
-        this.app.listen(this.app.get('port'),()=>{
+
+    }
+
+    start(): void {
+        this.app.listen(this.app.get('port'), () => {
             console.log("Server on port " + this.app.get('port'));
         });
     }

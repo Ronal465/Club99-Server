@@ -20,7 +20,7 @@ class InicioControlador {
             const ListaGratis = await pool.query('Select * from Curso where idCurso in' +
                 '(Select idCurso from FiltroCurso where idFiltro = 0 and idTipoFiltro = 1)', async function (err, resultGratis, fields) {
 
-                    await resultGratis.forEach(async (Curso: any) => {
+                  resultGratis.forEach(async (Curso: any) => {
 
                         const consultProfesor = await pool.query('SELECT idUsuario,Nombres,Apellidos FROM Usuario WHERE idUsuario = ?', [Curso.idProfesor], async function (err, Profesor, fields) {
 
@@ -31,15 +31,14 @@ class InicioControlador {
                                     Profesor,
                                     Filtros
                                 });
-                                ListaCursos.push({
-                                    Curso,
-                                    Profesor,
-                                    Filtros
-                                });
-                                res.json(ListaCursos);
+                                
+                   
                             });
+                            res.json(ListaCursos);
                         });
                     });
+              
+                   
                 });
 
                 
@@ -71,7 +70,7 @@ class InicioControlador {
             res.json({ "Estado": "FalloJson" });
         }
 
-
+        
 
         // const consultUsuarioLogin = await pool.query('SELECT idUsuario,Nombres,Apellidos,FechaNacimiento,idProfesion,idSeguridadSocial' +
         //     ',idClasificacionEtnica,idTipoGenero,idExclusividad,idNivelAcademico,idTipoUsuario' +

@@ -13,6 +13,9 @@ const ClassValidacionesRutas_1 = __importDefault(require("./routes/Validaciones/
 const auth_1 = __importDefault(require("./routes/Login/auth"));
 const Registrar_1 = __importDefault(require("./routes/Login/Registrar"));
 const ClassInicioRutas_1 = __importDefault(require("./routes/Inicio/ClassInicioRutas"));
+const AWSRutas_1 = __importDefault(require("./routes/AWS/AWSRutas"));
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 class Server {
     constructor() {
         this.app = express_1.default();
@@ -33,6 +36,7 @@ class Server {
         this.app.use(auth_1.default);
         this.app.use(Registrar_1.default);
         this.app.use(ClassInicioRutas_1.default);
+        this.app.use(AWSRutas_1.default);
     }
     start() {
         this.app.listen(this.app.get('port'), () => {

@@ -27,7 +27,7 @@ class InicioControlador {
                 const ListaGratis = yield database_1.default.query('Select * from Curso where idCurso in' +
                     '(Select idCurso from FiltroCurso where idFiltro = 0 and idTipoFiltro = 1)', function (err, resultGratis, fields) {
                     return __awaiter(this, void 0, void 0, function* () {
-                        yield resultGratis.forEach((Curso) => __awaiter(this, void 0, void 0, function* () {
+                        resultGratis.forEach((Curso) => __awaiter(this, void 0, void 0, function* () {
                             const consultProfesor = yield database_1.default.query('SELECT idUsuario,Nombres,Apellidos FROM Usuario WHERE idUsuario = ?', [Curso.idProfesor], function (err, Profesor, fields) {
                                 return __awaiter(this, void 0, void 0, function* () {
                                     const consultProfesor = yield database_1.default.query('SELECT idFiltroCurso,idTipoFiltro,idFiltro FROM filtrocurso WHERE idCurso = ?', [Curso.idCurso], function (err, Filtros, fields) {
@@ -37,14 +37,9 @@ class InicioControlador {
                                                 Profesor,
                                                 Filtros
                                             });
-                                            ListaCursos.push({
-                                                Curso,
-                                                Profesor,
-                                                Filtros
-                                            });
-                                            res.json(ListaCursos);
                                         });
                                     });
+                                    res.json(ListaCursos);
                                 });
                             });
                         }));
