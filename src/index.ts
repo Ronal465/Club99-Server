@@ -12,8 +12,9 @@ import Authh from "./routes/Login/auth";
 import Regis from "./routes/Login/Registrar";
 import ObtInicioRuta from "./routes/Inicio/ClassInicioRutas";
 import ObtAWS from "./routes/AWS/AWSRutas";
-const multer  = require('multer');
-const upload = multer({ dest: 'uploads/' });
+import ObtCrearCursoRutas from "./routes/CrearCurso/CrearCursoRutas";
+
+
 
 class Server {
 
@@ -43,7 +44,7 @@ class Server {
         this.app.use(Regis);
         this.app.use(ObtInicioRuta);
         this.app.use(ObtAWS);
-
+        this.app.use(ObtCrearCursoRutas);
 
     }
 

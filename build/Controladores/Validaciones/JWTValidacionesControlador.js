@@ -95,8 +95,10 @@ class JWTValidacionesControlador {
             try {
                 var token = jwt.verify(req.body.TokenRecuperar, ContrasenaRecupearContrasena);
                 var decoded = jwtDecode(req.body.TokenRecuperar);
-                res.json({ Estado: "Correcto",
-                    idTipoUsuario: decoded.idTipoUsuario });
+                res.json({
+                    Estado: "Correcto",
+                    idTipoUsuario: decoded.idTipoUsuario
+                });
             }
             catch (err) {
                 res.json({ Estado: "Fallo" });
@@ -110,8 +112,10 @@ class JWTValidacionesControlador {
             try {
                 var token = jwt.verify(req.body.TokenLogin, Contrasena);
                 var decoded = jwtDecode(req.body.TokenLogin);
-                res.json({ Estado: "Correcto",
-                    idTipoUsuario: decoded.idTipoUsuario });
+                res.json({
+                    Estado: "Correcto",
+                    idTipoUsuario: decoded.idTipoUsuario
+                });
             }
             catch (err) {
                 res.json({ Estado: "Fallo" });
