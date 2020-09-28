@@ -157,5 +157,83 @@ class RegistrarControlador {
             }
         });
     }
+    PostCrearProfesor(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const CrearProfesor = yield database_1.default.query('INSERT INTO profesorcurso set ? ', [req.body], function (err, result, fields) {
+                return __awaiter(this, void 0, void 0, function* () {
+                    if (err) {
+                        res.json({ err: err });
+                    }
+                    else {
+                        res.json({ Estado: "Correcto" });
+                    }
+                });
+            });
+        });
+    }
+    PostExperienciaProfesor(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            req.body.forEach((element) => __awaiter(this, void 0, void 0, function* () {
+                const Crearexperienciaprofesor = yield database_1.default.query('INSERT INTO experienciaprofesor set ? ', [element], function (err, result, fields) {
+                    return __awaiter(this, void 0, void 0, function* () {
+                        if (err) {
+                            res.json({ err: err });
+                        }
+                        else {
+                            console.log("Correcto");
+                        }
+                    });
+                });
+            }));
+        });
+    }
+    PostActualizarUsuario(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('Update  usuario set ? WHERE idUsuario = ? ', [req.body, req.body.idUsuario], function (err, result, fields) {
+                if (err)
+                    throw err;
+                res.json("Correcto");
+            });
+        });
+    }
+    PostActualizarUsuarioSeguridadSocial(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('Update  seguridadsocial set ? WHERE idUsuario = ? ', [req.body, req.body.idUsuario], function (err, result, fields) {
+                if (err)
+                    throw err;
+                res.json("Correcto");
+            });
+        });
+    }
+    PostActualizarUsuarioExclusividad(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('Update  exclusividad set ? WHERE idUsuario = ? ', [req.body, req.body.idUsuario], function (err, result, fields) {
+                if (err)
+                    throw err;
+                res.json("Correcto");
+            });
+        });
+    }
+    PostActualizarUsuarioUbicacion(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('Update  ubicacion set ? WHERE idUsuario = ? ', [req.body, req.body.idUsuario], function (err, result, fields) {
+                if (err)
+                    throw err;
+                res.json("Correcto");
+            });
+        });
+    }
+    PostActualizarUsuarioContrasena(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var Contrasena = { Contrasena: yield Bcrypts_1.encriptacion.encriptar(req.body.Contrasena) };
+            console.log(req.body);
+            console.log(Contrasena);
+            yield database_1.default.query('Update  usuario set ? WHERE idUsuario = ? ', [{ Contrasena: Contrasena.Contrasena }, req.body.idUsuario], function (err, result, fields) {
+                if (err)
+                    throw err;
+                res.json("Correcto");
+            });
+        });
+    }
 }
 exports.Registro = new RegistrarControlador();

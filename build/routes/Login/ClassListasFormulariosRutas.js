@@ -23,6 +23,12 @@ class ListasFormulariosRutas {
         this.router.get('/api/list/FuncionTipoUsuario/:idTipoUsuario', ClassListarFormulariosControlador_1.ObtListarFormulariosControlador.GetListFuncionesTipoUsuario);
         this.router.get('/api/list/TipoFuncionarioPublico', ClassListarFormulariosControlador_1.ObtListarFormulariosControlador.GetListTipoPromotor);
         this.router.get('/api/list/TipoExclusividad', ClassListarFormulariosControlador_1.ObtListarFormulariosControlador.GetListTipoExclusividad);
+        this.router.get('/api/list/Promotor', ClassListarFormulariosControlador_1.ObtListarFormulariosControlador.GetListPromotor);
+        this.router.get('/api/list/TiposUsuarios', ClassListarFormulariosControlador_1.ObtListarFormulariosControlador.GetListTiposUsuarios);
+        this.router.get('/api/Get/Usuario/:idUsuario', ClassListarFormulariosControlador_1.ObtListarFormulariosControlador.GetUsuario);
+        this.router.get('/api/Get/SeguridadSocial/Usuario/:idUsuario', ClassListarFormulariosControlador_1.ObtListarFormulariosControlador.GetUsaurioSeguridadSocial);
+        this.router.get('/api/Get/Ubicacion/Usuario/:idUsuario', ClassListarFormulariosControlador_1.ObtListarFormulariosControlador.GetUsaurioUbicacion);
+        this.router.get('/api/Get/Exclusividad/Usuario/:idUsuario', ClassListarFormulariosControlador_1.ObtListarFormulariosControlador.GetUsaurioExclusividad);
     }
 }
 const ObtListasFormulariosRutas = new ListasFormulariosRutas();

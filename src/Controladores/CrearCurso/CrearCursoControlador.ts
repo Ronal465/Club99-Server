@@ -64,7 +64,6 @@ class CrearCursoControlador {
 
   }
 
-
   public async PutEditarCurso(req: Request, res: Response) {
 
     await pool.query('Update  Curso set ? WHERE idCurso = ? ', [req.body, req.body.idCurso], function (err, result, fields) {
@@ -82,7 +81,6 @@ class CrearCursoControlador {
     });
 
   }
-
 
   public async GetListCursos(req: Request, res: Response) {
 

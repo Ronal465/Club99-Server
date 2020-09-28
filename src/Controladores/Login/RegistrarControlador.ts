@@ -51,7 +51,7 @@ class RegistrarControlador {
     ObtEnviarCorreoController.CrearUsuarioCorreo(TokenRegisterDone.TokenLogin, req.body[0].CorreoElectronico);
 
 
-    res.json( { Estado : "Correcto"});
+    res.json({ Estado: "Correcto" });
 
 
   }
@@ -184,9 +184,96 @@ class RegistrarControlador {
   }
 
 
+  public async PostCrearProfesor(req: Request, res: Response) {
+
+
+    const CrearProfesor = await pool.query('INSERT INTO profesorcurso set ? ', [req.body], async function (err, result, fields) {
+
+      if (err) { res.json({ err: err }) }
+
+      else {
+
+        res.json({ Estado: "Correcto" });
+
+      }
+    });
 
 
 
+
+
+  }
+  public async PostExperienciaProfesor(req: Request, res: Response) {
+
+
+    req.body.forEach (  async (element: any)  => {
+      
+      const Crearexperienciaprofesor = await pool.query('INSERT INTO experienciaprofesor set ? ', [element], async function (err, result, fields) {
+
+        if (err) { res.json({ err: err }) }
+  
+        else {
+  
+         console.log("Correcto");
+  
+        }
+      });
+  
+
+    });
+
+  
+
+
+
+
+  }
+  public async PostActualizarUsuario(req: Request, res: Response) {
+
+
+    await pool.query('Update  usuario set ? WHERE idUsuario = ? ', [req.body, req.body.idUsuario], function (err, result, fields) {
+      if (err) throw err;
+      res.json("Correcto");
+    });
+
+  }
+  public async PostActualizarUsuarioSeguridadSocial(req: Request, res: Response) {
+
+    await pool.query('Update  seguridadsocial set ? WHERE idUsuario = ? ', [req.body, req.body.idUsuario], function (err, result, fields) {
+      if (err) throw err;
+      res.json("Correcto");
+    });
+
+  }
+  public async PostActualizarUsuarioExclusividad(req: Request, res: Response) {
+
+    await pool.query('Update  exclusividad set ? WHERE idUsuario = ? ', [req.body, req.body.idUsuario], function (err, result, fields) {
+      if (err) throw err;
+      res.json("Correcto");
+    });
+
+  }
+  public async PostActualizarUsuarioUbicacion(req: Request, res: Response) {
+
+    await pool.query('Update  ubicacion set ? WHERE idUsuario = ? ', [req.body, req.body.idUsuario], function (err, result, fields) {
+      if (err) throw err;
+      res.json("Correcto");
+    });
+
+  }
+  public async PostActualizarUsuarioContrasena(req: Request, res: Response) {
+
+    var Contrasena = { Contrasena: await encriptacion.encriptar(req.body.Contrasena) };
+
+      console.log(req.body);
+      console.log(Contrasena);
+
+    await pool.query('Update  usuario set ? WHERE idUsuario = ? ', [{Contrasena:Contrasena.Contrasena}, req.body.idUsuario], function (err, result, fields) {
+      if (err) throw err;
+      res.json("Correcto");
+    });
+
+  }
 }
 
 

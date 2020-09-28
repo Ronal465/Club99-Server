@@ -14,8 +14,12 @@ class CorreoRoutes {
         }
 
         config(): void {
+
+
                 this.router.post('/api/Upload/File', upload.single('video'),ObtAWSControlador.SubirVideo);
                 this.router.post('/api/Upload/img', upload.single('img'),ObtAWSControlador.SubirImg); 
+                this.router.post('/api/Upload/img/profesor', upload.single('img'),ObtAWSControlador.SubirImgProfesor); 
+                
                 
         }
 }

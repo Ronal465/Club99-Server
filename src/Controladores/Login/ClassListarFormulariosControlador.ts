@@ -183,6 +183,104 @@ class ListarFormulariosControlador {
     }
 
 
+    // Numero 
+    public async GetListPromotor(req: Request, res: Response) {
+
+        await pool.query('SELECT * FROM tipopromotor', function (err, result, fields) {
+            if (err) throw err;
+            res.json(result);
+        });
+
+    }
+
+    // Numero
+    public async GetListTiposUsuarios(req: Request, res: Response) {
+
+        await pool.query('SELECT * FROM tipousuario where idtipousuario != 1', function (err, result, fields) {
+            if (err) throw err;
+            res.json(result);
+        });
+
+    }
+
+
+    // Numero
+    public async GetUsuario(req: Request, res: Response) {
+
+        const { idUsuario } = req.params;
+
+
+        await pool.query('SELECT * FROM usuario  where  idUsuario = ?' , [idUsuario],function (err, result, fields) {
+
+            if (err) { throw err };
+
+            if (result.length > 0) {
+                return res.json(result[0]);
+            } else {
+
+                res.status(404).json({ text: "El Usuario No Existe" });
+
+            }
+        });
+
+    }
+    public async GetUsaurioUbicacion(req: Request, res: Response) {
+
+        const { idUsuario } = req.params;
+
+
+        await pool.query('SELECT * FROM ubicacion  where  idUsuario = ?' , [idUsuario],function (err, result, fields) {
+
+            if (err) { throw err };
+
+            if (result.length > 0) {
+                return res.json(result[0]);
+            } else {
+
+                res.status(404).json({ text: "El Usuario No Existe" });
+
+            }
+        });
+
+    }
+    public async GetUsaurioSeguridadSocial(req: Request, res: Response) {
+
+        const { idUsuario } = req.params;
+
+
+        await pool.query('SELECT * FROM seguridadsocial  where  idUsuario = ?' , [idUsuario],function (err, result, fields) {
+
+            if (err) { throw err };
+
+            if (result.length > 0) {
+                return res.json(result[0]);
+            } else {
+
+                res.status(404).json({ text: "El Usuario No Existe" });
+
+            }
+        });
+
+    }
+    public async GetUsaurioExclusividad(req: Request, res: Response) {
+
+        const { idUsuario } = req.params;
+
+
+        await pool.query('SELECT * FROM exclusividad  where  idUsuario = ?' , [idUsuario],function (err, result, fields) {
+
+            if (err) { throw err };
+
+            if (result.length > 0) {
+                return res.json(result[0]);
+            } else {
+
+                res.status(404).json({ text: "El Usuario No Existe" });
+
+            }
+        });
+
+    }
 }
 
 export const ObtListarFormulariosControlador = new ListarFormulariosControlador();

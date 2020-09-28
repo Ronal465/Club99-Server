@@ -28,7 +28,13 @@ class ListasFormulariosRutas {
                 this.router.get('/api/list/FuncionTipoUsuario/:idTipoUsuario',ObtListarFormulariosControlador.GetListFuncionesTipoUsuario);
                 this.router.get('/api/list/TipoFuncionarioPublico', ObtListarFormulariosControlador.GetListTipoPromotor);
                 this.router.get('/api/list/TipoExclusividad', ObtListarFormulariosControlador.GetListTipoExclusividad);
-                
+                this.router.get('/api/list/Promotor', ObtListarFormulariosControlador.GetListPromotor);
+                this.router.get('/api/list/TiposUsuarios', ObtListarFormulariosControlador.GetListTiposUsuarios);
+                this.router.get('/api/Get/Usuario/:idUsuario', ObtListarFormulariosControlador.GetUsuario);
+                this.router.get('/api/Get/SeguridadSocial/Usuario/:idUsuario', ObtListarFormulariosControlador.GetUsaurioSeguridadSocial);
+                this.router.get('/api/Get/Ubicacion/Usuario/:idUsuario', ObtListarFormulariosControlador.GetUsaurioUbicacion);
+                this.router.get('/api/Get/Exclusividad/Usuario/:idUsuario', ObtListarFormulariosControlador.GetUsaurioExclusividad);
+
         }
 }
 

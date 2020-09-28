@@ -180,5 +180,94 @@ class ListarFormulariosControlador {
             });
         });
     }
+    // Numero 
+    GetListPromotor(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('SELECT * FROM tipopromotor', function (err, result, fields) {
+                if (err)
+                    throw err;
+                res.json(result);
+            });
+        });
+    }
+    // Numero
+    GetListTiposUsuarios(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('SELECT * FROM tipousuario where idtipousuario != 1', function (err, result, fields) {
+                if (err)
+                    throw err;
+                res.json(result);
+            });
+        });
+    }
+    // Numero
+    GetUsuario(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { idUsuario } = req.params;
+            yield database_1.default.query('SELECT * FROM usuario  where  idUsuario = ?', [idUsuario], function (err, result, fields) {
+                if (err) {
+                    throw err;
+                }
+                ;
+                if (result.length > 0) {
+                    return res.json(result[0]);
+                }
+                else {
+                    res.status(404).json({ text: "El Usuario No Existe" });
+                }
+            });
+        });
+    }
+    GetUsaurioUbicacion(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { idUsuario } = req.params;
+            yield database_1.default.query('SELECT * FROM ubicacion  where  idUsuario = ?', [idUsuario], function (err, result, fields) {
+                if (err) {
+                    throw err;
+                }
+                ;
+                if (result.length > 0) {
+                    return res.json(result[0]);
+                }
+                else {
+                    res.status(404).json({ text: "El Usuario No Existe" });
+                }
+            });
+        });
+    }
+    GetUsaurioSeguridadSocial(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { idUsuario } = req.params;
+            yield database_1.default.query('SELECT * FROM seguridadsocial  where  idUsuario = ?', [idUsuario], function (err, result, fields) {
+                if (err) {
+                    throw err;
+                }
+                ;
+                if (result.length > 0) {
+                    return res.json(result[0]);
+                }
+                else {
+                    res.status(404).json({ text: "El Usuario No Existe" });
+                }
+            });
+        });
+    }
+    GetUsaurioExclusividad(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { idUsuario } = req.params;
+            yield database_1.default.query('SELECT * FROM exclusividad  where  idUsuario = ?', [idUsuario], function (err, result, fields) {
+                if (err) {
+                    throw err;
+                }
+                ;
+                if (result.length > 0) {
+                    return res.json(result[0]);
+                }
+                else {
+                    res.status(404).json({ text: "El Usuario No Existe" });
+                }
+            });
+        });
+    }
 }
 exports.ObtListarFormulariosControlador = new ListarFormulariosControlador();

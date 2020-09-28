@@ -12,6 +12,7 @@ class CorreoRoutes {
     config() {
         this.router.post('/api/Upload/File', upload.single('video'), AWSControlador_1.ObtAWSControlador.SubirVideo);
         this.router.post('/api/Upload/img', upload.single('img'), AWSControlador_1.ObtAWSControlador.SubirImg);
+        this.router.post('/api/Upload/img/profesor', upload.single('img'), AWSControlador_1.ObtAWSControlador.SubirImgProfesor);
     }
 }
 const ObtEnviarCorreoRoutes = new CorreoRoutes();
