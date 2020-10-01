@@ -16,7 +16,15 @@ class ListasFormulariosRutas {
         config(): void {
 
                 //Ruta Para Obtener una lista de todos los generos registrados
-                this.router.post('/api/Inicio/List/Cursos', ObtInicioControlador.ListCursos);
+                this.router.get('/api/Inicio/List/Cursos', ObtInicioControlador.ListCursosGratis);
+                this.router.post('/api/Inicio/List/Cursos/Etnicos', ObtInicioControlador.ListCursosEtnicos);
+                this.router.post('/api/Inicio/List/Cursos/Exclusivo', ObtInicioControlador.ListCursosExclusivos);
+               
+                this.router.post('/api/Inicio/Get/Profesor', ObtInicioControlador.ConsultProfesor);
+                this.router.post('/api/Inicio/Get/Filtros', ObtInicioControlador.ConsultFiltros);
+                this.router.post('/api/Inicio/Get/Nombre/Filtro', ObtInicioControlador.ConsultFiltroNombre);
+ 
+
  
         }
 }

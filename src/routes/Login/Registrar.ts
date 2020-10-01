@@ -16,9 +16,7 @@ class Registrar {
         this.router.post('/api/Recuperar/Contrasena/Cambiar/', Registro.RecupearContraseña);
         this.router.post('/api/Crear/Profesor/', Registro.PostCrearProfesor);
         this.router.post('/api/Crear/Experiencia/', Registro.PostExperienciaProfesor);
-
         this.router.post('/api/Cambiar/Contrasena/', Registro.PostActualizarUsuarioContrasena);
-        
         this.router.post('/api/Actualizar/Usuario/', Registro.PostActualizarUsuario); 
         this.router.post('/api/Actualizar/Usuario/SeguridadSocial/', Registro.PostActualizarUsuarioSeguridadSocial);
         this.router.post('/api/Actualizar/Usuario/Exclusividad/', Registro.PostActualizarUsuarioExclusividad);

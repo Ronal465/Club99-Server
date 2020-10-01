@@ -6,9 +6,9 @@ class EnviarCorreoController {
 
     private Correo = "produccionclub99@gmail.com";
     private Contrasena = "Administrador123"
-    
 
-    public async  ValidarCorreo(req: Request, res: Response) {
+
+    public async ValidarCorreo(req: Request, res: Response) {
 
         var nodemailer = require('nodemailer');
 
@@ -28,7 +28,7 @@ class EnviarCorreoController {
 
 
         var mailOptions = {
-            from:  this.Correo, // sender address
+            from: this.Correo, // sender address
             to: '' + CorreoElectronico, // list of receivers
             subject: 'Objetivo ', // Subject line
             text: 'Texto De Ejemplo', // plaintext body
@@ -50,7 +50,7 @@ class EnviarCorreoController {
     }
 
 
-    public async  CrearUsuarioCorreo(TokenRegisterDone :any,CorreoElectronico: any) {
+    public async CrearUsuarioCorreo(TokenRegisterDone: any, CorreoElectronico: any) {
 
         var nodemailer = require('nodemailer');
 
@@ -67,14 +67,14 @@ class EnviarCorreoController {
         });
 
         var mailOptions = {
-            from:  this.Correo, // sender address
+            from: this.Correo, // sender address
             to: '' + CorreoElectronico, // list of receivers
             subject: 'Objetivo ', // Subject line
             text: 'Texto De Ejemplo', // plaintext body
             html: `<p>Su Link Para entrar Es http://localhost:4200/ValidacionCorreoRegistro/${TokenRegisterDone} </p>`  // html body
         };
 
-  // send mail with defined transport object
+        // send mail with defined transport object
 
         await transporter.sendMail(mailOptions, function (error: any, info: any) {
             if (error) {
@@ -84,47 +84,47 @@ class EnviarCorreoController {
 
         });
         return {};
-       
 
-  } 
 
-  public async  RecuperarContraseña(TokenRecuperarContrasenaDone :any,CorreoElectronico: any) {
+    }
 
-    var nodemailer = require('nodemailer');
+    public async RecuperarContraseña(TokenRecuperarContrasenaDone: any, CorreoElectronico: any) {
 
-    // create reusable transporter object using the default SMTP transport
-    // var transporter = nodemailer.createTransport('smtps://proyectocelutel@gmail.com:Celutel2019*');
-    var transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 587,
-        secure: false, // upgrade later with STARTTLS
-        auth: {
-            user: this.Correo,
-            pass: this.Contrasena,
-        }
-    });
+        var nodemailer = require('nodemailer');
 
-    var mailOptions = {
-        from:  this.Correo, // sender address
-        to: '' + CorreoElectronico, // list of receivers
-        subject: 'Objetivo ', // Subject line
-        text: 'Texto De Ejemplo', // plaintext body
-        html: `<p>Su Link Para entrar Es http://localhost:4200/RecuperarContrasena/${TokenRecuperarContrasenaDone} </p>`  // html body
-    };
+        // create reusable transporter object using the default SMTP transport
+        // var transporter = nodemailer.createTransport('smtps://proyectocelutel@gmail.com:Celutel2019*');
+        var transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 587,
+            secure: false, // upgrade later with STARTTLS
+            auth: {
+                user: this.Correo,
+                pass: this.Contrasena,
+            }
+        });
 
-// send mail with defined transport object
+        var mailOptions = {
+            from: this.Correo, // sender address
+            to: '' + CorreoElectronico, // list of receivers
+            subject: 'Objetivo ', // Subject line
+            text: 'Texto De Ejemplo', // plaintext body
+            html: `<p>Su Link Para entrar Es http://localhost:4200/RecuperarContrasena/${TokenRecuperarContrasenaDone} </p>`  // html body
+        };
 
-    await transporter.sendMail(mailOptions, function (error: any, info: any) {
-        if (error) {
-            return { Estado: "Fallo"}
-        }
-        console.log('Message sent: ' + info.response);
+        // send mail with defined transport object
 
-    });
-    return { Estado: "Correcto"};
-   
+        await transporter.sendMail(mailOptions, function (error: any, info: any) {
+            if (error) {
+                return { Estado: "Fallo" }
+            }
+            console.log('Message sent: ' + info.response);
 
-} 
+        });
+        return { Estado: "Correcto" };
+
+
+    }
 
 
 }

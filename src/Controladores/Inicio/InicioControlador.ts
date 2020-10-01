@@ -1,124 +1,160 @@
 import { Request, Response } from 'express';
 import pool from '../../database';
 import { ObtJWTValidacionesControlador } from "../Validaciones/JWTValidacionesControlador";
-import { encriptacion } from "../../Incriptacion/Bcrypts";
 
 class InicioControlador {
 
 
-    public async ListCursos(req: Request, res: Response) {
-      var  ListaCursos: any = [];
+    public async ListCursosGratis(req: Request, res: Response) {
 
-        if (req.body.TokenLogin == undefined) {
+        const ListaGratis = await pool.query('Select * from Curso where idCurso in' +
+            '(Select idCurso from FiltroCurso where idFiltro = 0 and idTipoFiltro = 1)', function (err, resultGratis, fields) {
 
-            res.json({ "Mensaje": "Hola" });
+                res.json(resultGratis);
 
-        } else if (req.body.TokenLogin = !undefined) {
+            });
 
-            var TokenLogin = ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
+    }
 
-            const ListaGratis = await pool.query('Select * from Curso where idCurso in' +
-                '(Select idCurso from FiltroCurso where idFiltro = 0 and idTipoFiltro = 1)', async function (err, resultGratis, fields) {
+    public async ListCursosEtnicos(req: Request, res: Response) {
 
-                  resultGratis.forEach(async (Curso: any) => {
 
-                        const consultProfesor = await pool.query('SELECT idUsuario,Nombres,Apellidos FROM Usuario WHERE idUsuario = ?', [Curso.idProfesor], async function (err, Profesor, fields) {
+        var TokenLogin = await ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
+       
 
-                            const consultProfesor = await pool.query('SELECT idFiltroCurso,idTipoFiltro,idFiltro FROM filtrocurso WHERE idCurso = ?', [Curso.idCurso], async function (err, Filtros, fields) {
-                          
-                            ListaCursos.push({
-                                    Curso,
-                                    Profesor,
-                                    Filtros
-                                });
-                                
+        var idFiltro = TokenLogin.idClasificacionEtnica;
+
+        if (TokenLogin.idClasificacionEtnica != undefined) {
+
+            const ListaEtnica = await pool.query('Select * from Curso where idCurso in' +
+                '(Select idCurso from FiltroCurso where idFiltro = ? and idTipoFiltro = 3)', [idFiltro], function (err, ListaEtnica, fields) {
+
+                    res.json(ListaEtnica);
                    
-                            });
-                            res.json(ListaCursos);
-                        });
-                    });
-              
-                   
+
                 });
 
-                
+        } else {
+            res.json([]);
+        }
 
-               
+    }
 
-            // const ListaExclusivos = await pool.query('Select * from Curso where idCurso = '+
-            // '(Select idCurso from FiltroCurso where idFiltro = ? and idTipoFiltro = 2' , [req.body.idExclusividad], function (err, result, fields) {
-
-            // ListaCursos.push(res);
-
-            // });
-
-            // const ListaEtnias = await pool.query('Select * from Curso where idCurso = '+
-            // '(Select idCurso from FiltroCurso where idFiltro = ? and idTipoFiltro = 3' , [req.body.idClasificacionEtnica], function (err, result, fields) {
-
-            // ListaCursos.push(res);
-
-            // });
+    public async ListCursosExclusivos(req: Request, res: Response) {
 
 
+        var TokenLogin = await ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
+       
+
+        var idExclusividad = TokenLogin.idExclusividad;
+
+        if (TokenLogin.idExclusividad != undefined) {
+
+            const ListaEtnica = await pool.query('Select idTipoExclusividad from exclusividad where idExclusividad = ?', [idExclusividad], async function (err, result, fields) {
+
+                var idTipoExclusivo = result[0].idTipoExclusividad;
 
 
+                if (idTipoExclusivo == 1) {
+
+                    res.json([]);
+                    console.log("Nada");
 
 
+                } else {
+                    if (idTipoExclusivo == 2) {
+                        const ListaExclusivos = await pool.query('Select * from Curso where idCurso in' +
+                            '(Select idCurso from FiltroCurso where (idFiltro = 2) and idTipoFiltro = 2)', [idTipoExclusivo], function (err, ListaExclusivos, fields) {
 
+                                res.json(ListaExclusivos);
+                                console.log(ListaExclusivos);
+
+                            });
+                    } else if (idTipoExclusivo == 3) {
+                        const ListaExclusivos = await pool.query('Select * from Curso where idCurso in' +
+                            '(Select idCurso from FiltroCurso where (idFiltro = 2 or idFiltro = 3) and idTipoFiltro = 2)', [idTipoExclusivo], function (err, ListaExclusivos, fields) {
+
+                                res.json(ListaExclusivos);
+                                console.log(ListaExclusivos);
+
+                            });
+                    } else if (idTipoExclusivo == 4) {
+                        const ListaExclusivos = await pool.query('Select * from Curso where idCurso in' +
+                            '(Select idCurso from FiltroCurso where (idFiltro = 2 or idFiltro = 3 or idFiltro = 4) and idTipoFiltro = 2)', [idTipoExclusivo], function (err, ListaExclusivos, fields) {
+
+                                res.json(ListaExclusivos);
+                                console.log(ListaExclusivos);
+
+                            });
+                    } else if (idTipoExclusivo == 5) {
+                        const ListaExclusivos = await pool.query('Select * from Curso where idCurso in' +
+                            '(Select idCurso from FiltroCurso where (idFiltro = 2 or idFiltro = 3 or idFiltro = 4 or idFiltro = 5)  and idTipoFiltro = 2)', [idTipoExclusivo], function (err, ListaExclusivos, fields) {
+
+                                res.json(ListaExclusivos);
+                                console.log(ListaExclusivos);
+                            });
+                    }
+                }
+
+            });
 
         } else {
-            res.json({ "Estado": "FalloJson" });
+            res.json([]);
         }
+
+    }
+
+    public async ConsultProfesor(req: Request, res: Response) {
+
+
+        const ProfesorLista = await pool.query('SELECT idUsuario,Nombres,Apellidos FROM Usuario WHERE idUsuario = ?', [req.body.idProfesor], function (err, Profesor, fields) {
+
+            res.json(Profesor);
+
+        });
+
+
+
+    }
+
+    public async ConsultFiltros(req: Request, res: Response) {
+
+
+        const ListaFiltros = await pool.query('SELECT idFiltroCurso,idTipoFiltro,idFiltro FROM filtrocurso WHERE idCurso = ?', [req.body.idCurso], function (err, Filtros, fields) {
+
+            res.json(Filtros);
+
+        });
+
+
+
+    }
+
+    public async ConsultFiltroNombre(req: Request, res: Response) {
+
+        var idTipoFiltro = req.body.idTipoFiltro;
+        var idFiltro = req.body.idFiltro;
 
         
 
-        // const consultUsuarioLogin = await pool.query('SELECT idUsuario,Nombres,Apellidos,FechaNacimiento,idProfesion,idSeguridadSocial' +
-        //     ',idClasificacionEtnica,idTipoGenero,idExclusividad,idNivelAcademico,idTipoUsuario' +
-        //     ',idUbicacion,idTipoPromotor,idEstadoValidacion,Contrasena FROM Usuario WHERE CorreoElectronico= ? ', [login.CorreoElectronico], function (err, result, fields) {
+        if (idTipoFiltro == 1) {
+            res.json({ Nombre: "Gratis" })
+        } else if (idTipoFiltro == 2) {
+            const Filtro = await pool.query('SELECT Nombre FROM tipoexclusividad WHERE idTipoExclusividad = ?', [idFiltro], function (err, NombreFiltro, fields) {
+
+                res.json({ Nombre: NombreFiltro[0].Nombre });
+
+            });
+
+        } else if (idTipoFiltro == 3) {
+            const Filtro = await pool.query('SELECT Nombre FROM clasificacionetnica WHERE idClasificacionEtnica = ?', [idFiltro], function (err, NombreFiltro, fields) {
 
 
-        //         if (err) { throw err };
+                res.json({ Nombre: NombreFiltro[0].Nombre });
 
-        //         if (result.length > 0) {
+            });
 
-        //             if (login.Contrasena == result[0].Contrasena) {
-        //                 if (result[0].idEstadoValidacion == 1) {
-        //                     var data = {
-        //                         headers: 'authorization',
-        //                         idUsuario: result[0].idUsuario,
-        //                         Nombres: result[0].Nombres,
-        //                         Apellidos: result[0].Apellidos,
-        //                         FechaNacimiento: result[0].FechaNacimiento,
-        //                         idProfesion: result[0].idProfesion,
-        //                         idSeguridadSocial: result[0].idSeguridadSocial,
-        //                         idClasificacionEtnica: result[0].idClasificacionEtnica,
-        //                         idTipoGenero: result[0].idTipoGenero,
-        //                         idExclusividad: result[0].idExclusividad,
-        //                         idNivelAcademico: result[0].idNivelAcademico,
-        //                         idTipoUsuario: result[0].idTipoUsuario,
-        //                         idUbicacion: result[0].idUbicacion,
-        //                         idTipoPromotor: result[0].idTipoPromotor
-        //                     };
-        //                     return res.json(ObtJWTValidacionesControlador.GetCrearTokenLogin(data));
-
-        //                 } else {
-        //                     return res.json({ Estado: "Bloqueado" });
-
-        //                 }
-
-
-
-        //             } else {
-        //                 return res.json({ Estado: "FalloContraseña" });
-
-
-        //             }
-
-
-        //         }else{
-        //             return res.json({ Estado: "FalloCorreo" });
-        //         }
-        //     });
+        }
 
 
 
@@ -129,19 +165,12 @@ class InicioControlador {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 }
+
+
+
+
+
 
 
 export const ObtInicioControlador = new InicioControlador();

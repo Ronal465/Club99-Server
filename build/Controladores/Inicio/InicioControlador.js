@@ -16,81 +16,110 @@ exports.ObtInicioControlador = void 0;
 const database_1 = __importDefault(require("../../database"));
 const JWTValidacionesControlador_1 = require("../Validaciones/JWTValidacionesControlador");
 class InicioControlador {
-    ListCursos(req, res) {
+    ListCursosGratis(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            var ListaCursos = [];
-            if (req.body.TokenLogin == undefined) {
-                res.json({ "Mensaje": "Hola" });
-            }
-            else if (req.body.TokenLogin = !undefined) {
-                var TokenLogin = JWTValidacionesControlador_1.ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
-                const ListaGratis = yield database_1.default.query('Select * from Curso where idCurso in' +
-                    '(Select idCurso from FiltroCurso where idFiltro = 0 and idTipoFiltro = 1)', function (err, resultGratis, fields) {
-                    return __awaiter(this, void 0, void 0, function* () {
-                        resultGratis.forEach((Curso) => __awaiter(this, void 0, void 0, function* () {
-                            const consultProfesor = yield database_1.default.query('SELECT idUsuario,Nombres,Apellidos FROM Usuario WHERE idUsuario = ?', [Curso.idProfesor], function (err, Profesor, fields) {
-                                return __awaiter(this, void 0, void 0, function* () {
-                                    const consultProfesor = yield database_1.default.query('SELECT idFiltroCurso,idTipoFiltro,idFiltro FROM filtrocurso WHERE idCurso = ?', [Curso.idCurso], function (err, Filtros, fields) {
-                                        return __awaiter(this, void 0, void 0, function* () {
-                                            ListaCursos.push({
-                                                Curso,
-                                                Profesor,
-                                                Filtros
-                                            });
-                                        });
-                                    });
-                                    res.json(ListaCursos);
-                                });
-                            });
-                        }));
-                    });
+            const ListaGratis = yield database_1.default.query('Select * from Curso where idCurso in' +
+                '(Select idCurso from FiltroCurso where idFiltro = 0 and idTipoFiltro = 1)', function (err, resultGratis, fields) {
+                res.json(resultGratis);
+            });
+        });
+    }
+    ListCursosEtnicos(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var TokenLogin = yield JWTValidacionesControlador_1.ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
+            var idFiltro = TokenLogin.idClasificacionEtnica;
+            if (TokenLogin.idClasificacionEtnica != undefined) {
+                const ListaEtnica = yield database_1.default.query('Select * from Curso where idCurso in' +
+                    '(Select idCurso from FiltroCurso where idFiltro = ? and idTipoFiltro = 3)', [idFiltro], function (err, ListaEtnica, fields) {
+                    res.json(ListaEtnica);
                 });
-                // const ListaExclusivos = await pool.query('Select * from Curso where idCurso = '+
-                // '(Select idCurso from FiltroCurso where idFiltro = ? and idTipoFiltro = 2' , [req.body.idExclusividad], function (err, result, fields) {
-                // ListaCursos.push(res);
-                // });
-                // const ListaEtnias = await pool.query('Select * from Curso where idCurso = '+
-                // '(Select idCurso from FiltroCurso where idFiltro = ? and idTipoFiltro = 3' , [req.body.idClasificacionEtnica], function (err, result, fields) {
-                // ListaCursos.push(res);
-                // });
             }
             else {
-                res.json({ "Estado": "FalloJson" });
+                res.json([]);
             }
-            // const consultUsuarioLogin = await pool.query('SELECT idUsuario,Nombres,Apellidos,FechaNacimiento,idProfesion,idSeguridadSocial' +
-            //     ',idClasificacionEtnica,idTipoGenero,idExclusividad,idNivelAcademico,idTipoUsuario' +
-            //     ',idUbicacion,idTipoPromotor,idEstadoValidacion,Contrasena FROM Usuario WHERE CorreoElectronico= ? ', [login.CorreoElectronico], function (err, result, fields) {
-            //         if (err) { throw err };
-            //         if (result.length > 0) {
-            //             if (login.Contrasena == result[0].Contrasena) {
-            //                 if (result[0].idEstadoValidacion == 1) {
-            //                     var data = {
-            //                         headers: 'authorization',
-            //                         idUsuario: result[0].idUsuario,
-            //                         Nombres: result[0].Nombres,
-            //                         Apellidos: result[0].Apellidos,
-            //                         FechaNacimiento: result[0].FechaNacimiento,
-            //                         idProfesion: result[0].idProfesion,
-            //                         idSeguridadSocial: result[0].idSeguridadSocial,
-            //                         idClasificacionEtnica: result[0].idClasificacionEtnica,
-            //                         idTipoGenero: result[0].idTipoGenero,
-            //                         idExclusividad: result[0].idExclusividad,
-            //                         idNivelAcademico: result[0].idNivelAcademico,
-            //                         idTipoUsuario: result[0].idTipoUsuario,
-            //                         idUbicacion: result[0].idUbicacion,
-            //                         idTipoPromotor: result[0].idTipoPromotor
-            //                     };
-            //                     return res.json(ObtJWTValidacionesControlador.GetCrearTokenLogin(data));
-            //                 } else {
-            //                     return res.json({ Estado: "Bloqueado" });
-            //                 }
-            //             } else {
-            //                 return res.json({ Estado: "FalloContraseña" });
-            //             }
-            //         }else{
-            //             return res.json({ Estado: "FalloCorreo" });
-            //         }
-            //     });
+        });
+    }
+    ListCursosExclusivos(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var TokenLogin = yield JWTValidacionesControlador_1.ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
+            var idExclusividad = TokenLogin.idExclusividad;
+            if (TokenLogin.idExclusividad != undefined) {
+                const ListaEtnica = yield database_1.default.query('Select idTipoExclusividad from exclusividad where idExclusividad = ?', [idExclusividad], function (err, result, fields) {
+                    return __awaiter(this, void 0, void 0, function* () {
+                        var idTipoExclusivo = result[0].idTipoExclusividad;
+                        if (idTipoExclusivo == 1) {
+                            res.json([]);
+                            console.log("Nada");
+                        }
+                        else {
+                            if (idTipoExclusivo == 2) {
+                                const ListaExclusivos = yield database_1.default.query('Select * from Curso where idCurso in' +
+                                    '(Select idCurso from FiltroCurso where (idFiltro = 2) and idTipoFiltro = 2)', [idTipoExclusivo], function (err, ListaExclusivos, fields) {
+                                    res.json(ListaExclusivos);
+                                    console.log(ListaExclusivos);
+                                });
+                            }
+                            else if (idTipoExclusivo == 3) {
+                                const ListaExclusivos = yield database_1.default.query('Select * from Curso where idCurso in' +
+                                    '(Select idCurso from FiltroCurso where (idFiltro = 2 or idFiltro = 3) and idTipoFiltro = 2)', [idTipoExclusivo], function (err, ListaExclusivos, fields) {
+                                    res.json(ListaExclusivos);
+                                    console.log(ListaExclusivos);
+                                });
+                            }
+                            else if (idTipoExclusivo == 4) {
+                                const ListaExclusivos = yield database_1.default.query('Select * from Curso where idCurso in' +
+                                    '(Select idCurso from FiltroCurso where (idFiltro = 2 or idFiltro = 3 or idFiltro = 4) and idTipoFiltro = 2)', [idTipoExclusivo], function (err, ListaExclusivos, fields) {
+                                    res.json(ListaExclusivos);
+                                    console.log(ListaExclusivos);
+                                });
+                            }
+                            else if (idTipoExclusivo == 5) {
+                                const ListaExclusivos = yield database_1.default.query('Select * from Curso where idCurso in' +
+                                    '(Select idCurso from FiltroCurso where (idFiltro = 2 or idFiltro = 3 or idFiltro = 4 or idFiltro = 5)  and idTipoFiltro = 2)', [idTipoExclusivo], function (err, ListaExclusivos, fields) {
+                                    res.json(ListaExclusivos);
+                                    console.log(ListaExclusivos);
+                                });
+                            }
+                        }
+                    });
+                });
+            }
+            else {
+                res.json([]);
+            }
+        });
+    }
+    ConsultProfesor(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const ProfesorLista = yield database_1.default.query('SELECT idUsuario,Nombres,Apellidos FROM Usuario WHERE idUsuario = ?', [req.body.idProfesor], function (err, Profesor, fields) {
+                res.json(Profesor);
+            });
+        });
+    }
+    ConsultFiltros(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const ListaFiltros = yield database_1.default.query('SELECT idFiltroCurso,idTipoFiltro,idFiltro FROM filtrocurso WHERE idCurso = ?', [req.body.idCurso], function (err, Filtros, fields) {
+                res.json(Filtros);
+            });
+        });
+    }
+    ConsultFiltroNombre(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var idTipoFiltro = req.body.idTipoFiltro;
+            var idFiltro = req.body.idFiltro;
+            if (idTipoFiltro == 1) {
+                res.json({ Nombre: "Gratis" });
+            }
+            else if (idTipoFiltro == 2) {
+                const Filtro = yield database_1.default.query('SELECT Nombre FROM tipoexclusividad WHERE idTipoExclusividad = ?', [idFiltro], function (err, NombreFiltro, fields) {
+                    res.json({ Nombre: NombreFiltro[0].Nombre });
+                });
+            }
+            else if (idTipoFiltro == 3) {
+                const Filtro = yield database_1.default.query('SELECT Nombre FROM clasificacionetnica WHERE idClasificacionEtnica = ?', [idFiltro], function (err, NombreFiltro, fields) {
+                    res.json({ Nombre: NombreFiltro[0].Nombre });
+                });
+            }
         });
     }
 }

@@ -9,7 +9,12 @@ class ListasFormulariosRutas {
     }
     config() {
         //Ruta Para Obtener una lista de todos los generos registrados
-        this.router.post('/api/Inicio/List/Cursos', InicioControlador_1.ObtInicioControlador.ListCursos);
+        this.router.get('/api/Inicio/List/Cursos', InicioControlador_1.ObtInicioControlador.ListCursosGratis);
+        this.router.post('/api/Inicio/List/Cursos/Etnicos', InicioControlador_1.ObtInicioControlador.ListCursosEtnicos);
+        this.router.post('/api/Inicio/List/Cursos/Exclusivo', InicioControlador_1.ObtInicioControlador.ListCursosExclusivos);
+        this.router.post('/api/Inicio/Get/Profesor', InicioControlador_1.ObtInicioControlador.ConsultProfesor);
+        this.router.post('/api/Inicio/Get/Filtros', InicioControlador_1.ObtInicioControlador.ConsultFiltros);
+        this.router.post('/api/Inicio/Get/Nombre/Filtro', InicioControlador_1.ObtInicioControlador.ConsultFiltroNombre);
     }
 }
 const ObtListasFormulariosRutas = new ListasFormulariosRutas();
