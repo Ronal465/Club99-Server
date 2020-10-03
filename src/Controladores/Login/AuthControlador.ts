@@ -16,7 +16,7 @@ class Auths {
 
         }
 
-
+ 
         const consultUsuarioLogin = await pool.query('SELECT idUsuario,Nombres,Apellidos,FechaNacimiento,idProfesion' +
             ',idClasificacionEtnica,idTipoGenero,idNivelAcademico,idTipoUsuario' +
             ',idTipoPromotor,idEstadoValidacion,Contrasena FROM Usuario WHERE CorreoElectronico= ? ', [login.CorreoElectronico], async function (err, result, fields) {
