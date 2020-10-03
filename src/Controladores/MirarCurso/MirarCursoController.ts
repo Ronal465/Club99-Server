@@ -329,7 +329,7 @@ class MirarCursoContrller {
 
     console.log(req.body)
 
-      const CrearCurso = await pool.query('Update from preguntasseccion set ?   where idPreguntasSeccion = ? ', [
+      const CrearCurso = await pool.query('Update preguntasseccion set ?   where idPreguntasSeccion = ? ', [
         req.body,
         req.body.idPreguntasSeccion
       ], async function (err, result, fields) {

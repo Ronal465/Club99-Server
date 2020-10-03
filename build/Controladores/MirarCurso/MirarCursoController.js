@@ -227,7 +227,7 @@ class MirarCursoContrller {
     ResponderPreguntasProfesor(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log(req.body);
-            const CrearCurso = yield database_1.default.query('Update from preguntasseccion set ?   where idPreguntasSeccion = ? ', [
+            const CrearCurso = yield database_1.default.query('Update preguntasseccion set ?   where idPreguntasSeccion = ? ', [
                 req.body,
                 req.body.idPreguntasSeccion
             ], function (err, result, fields) {
