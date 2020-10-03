@@ -222,7 +222,7 @@ class MirarCursoContrller {
 
    
 
-      const CrearCurso = await pool.query('SELECT * FROM cursousuario  where idUsuario = ? ', [TokenLogin.idUsuario], async function (err, result, fields) {
+      const CrearCurso = await pool.query('SELECT * FROM cursousuario  where idUsuario = ? and idCurso = ? ', [TokenLogin.idUsuario,req.body.idCurso], async function (err, result, fields) {
 
         if (err) { 
           res.status(404).json();
@@ -243,6 +243,113 @@ class MirarCursoContrller {
 
 
   }
+
+  public async AgregarCursoFavoritos(req: Request, res: Response) {
+
+    var TokenLogin = ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
+
+
+    
+
+      const CrearCurso = await pool.query('insert into cursousuario  set ? ', [{
+        idCursoUsuario:null,
+        idUsuario: TokenLogin.idUsuario,
+        idCurso: req.body.idCurso
+      }], async function (err, result, fields) {
+
+        if (err) { 
+          res.status(404).json();
+        };
+     
+        res.json({Estado: "Correcto"});
+
+
+
+      });
+    
+
+
+
+
+  }
+
+  public async QuitarCursoFavoritos(req: Request, res: Response) {
+
+    var TokenLogin = ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
+
+
+    
+
+      const CrearCurso = await pool.query('delete from cursousuario  where  idUsuario = ? and idCurso = ? ', [
+      
+        TokenLogin.idUsuario,
+        req.body.idCurso
+      ], async function (err, result, fields) {
+
+        if (err) { 
+          res.status(404).json();
+        };
+     
+        res.json({Estado: "Correcto"});
+
+
+
+      });
+    
+
+
+
+
+  }
+  public async GetPreguntasProfesor(req: Request, res: Response) {
+
+    var TokenLogin = ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
+
+
+      const CrearCurso = await pool.query('select * from preguntasseccion  where Respuesta = ""  and idSeccionCurso in (select idSeccionCurso from seccioncurso where  idCurso in (select idCurso from curso where idProfesor = ? )) ', [
+        TokenLogin.idUsuario,
+      ], async function (err, result, fields) {
+
+        if (err) { 
+          res.status(404).json();
+        };
+     
+        res.json(result);
+
+
+
+      });
+    
+
+
+
+
+  }
+  public async ResponderPreguntasProfesor(req: Request, res: Response) {
+
+    console.log(req.body)
+
+      const CrearCurso = await pool.query('Update from preguntasseccion set ?   where idPreguntasSeccion = ? ', [
+        req.body,
+        req.body.idPreguntasSeccion
+      ], async function (err, result, fields) {
+
+        if (err) { 
+          res.status(404).json();
+        };
+     
+        res.json(result);
+
+
+
+      });
+    
+
+
+
+
+  }
+
 
 }
 

@@ -23,6 +23,10 @@ class ListasFormulariosRutas {
                this.router.post('/api/VerCurso/Crear/Preguntas', ObtMirarCursoContrller.CrearPreguntaCurso);
                this.router.post('/api/MisCuros/Get/InfoCurso', ObtMirarCursoContrller.ObtenerInfoCursoUsuario);
                this.router.post('/api/InfoCurso/Validar/Curso', ObtMirarCursoContrller.ValidarCursoAsignado);
+               this.router.post('/api/Agregar/Curso/Favoritos', ObtMirarCursoContrller.AgregarCursoFavoritos);
+               this.router.post('/api/Quitar/Curso/Favoritos', ObtMirarCursoContrller.QuitarCursoFavoritos);
+               this.router.post('/api/Get/Preguntas/Favoritos', ObtMirarCursoContrller.GetPreguntasProfesor);
+               this.router.post('/api/Update/Preguntas/Favoritos', ObtMirarCursoContrller.ResponderPreguntasProfesor);
                
                
           

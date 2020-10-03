@@ -16,6 +16,10 @@ class ListasFormulariosRutas {
         this.router.post('/api/VerCurso/Crear/Preguntas', MirarCursoController_1.ObtMirarCursoContrller.CrearPreguntaCurso);
         this.router.post('/api/MisCuros/Get/InfoCurso', MirarCursoController_1.ObtMirarCursoContrller.ObtenerInfoCursoUsuario);
         this.router.post('/api/InfoCurso/Validar/Curso', MirarCursoController_1.ObtMirarCursoContrller.ValidarCursoAsignado);
+        this.router.post('/api/Agregar/Curso/Favoritos', MirarCursoController_1.ObtMirarCursoContrller.AgregarCursoFavoritos);
+        this.router.post('/api/Quitar/Curso/Favoritos', MirarCursoController_1.ObtMirarCursoContrller.QuitarCursoFavoritos);
+        this.router.post('/api/Get/Preguntas/Favoritos', MirarCursoController_1.ObtMirarCursoContrller.GetPreguntasProfesor);
+        this.router.post('/api/Update/Preguntas/Favoritos', MirarCursoController_1.ObtMirarCursoContrller.ResponderPreguntasProfesor);
     }
 }
 const ObtListasFormulariosRutas = new ListasFormulariosRutas();

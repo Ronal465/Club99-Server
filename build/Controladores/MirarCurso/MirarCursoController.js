@@ -157,7 +157,7 @@ class MirarCursoContrller {
     ValidarCursoAsignado(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             var TokenLogin = JWTValidacionesControlador_1.ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
-            const CrearCurso = yield database_1.default.query('SELECT * FROM cursousuario  where idUsuario = ? ', [TokenLogin.idUsuario], function (err, result, fields) {
+            const CrearCurso = yield database_1.default.query('SELECT * FROM cursousuario  where idUsuario = ? and idCurso = ? ', [TokenLogin.idUsuario, req.body.idCurso], function (err, result, fields) {
                 return __awaiter(this, void 0, void 0, function* () {
                     if (err) {
                         res.status(404).json();
@@ -169,6 +169,74 @@ class MirarCursoContrller {
                     else {
                         return res.json({ Estado: "Fallo" });
                     }
+                });
+            });
+        });
+    }
+    AgregarCursoFavoritos(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var TokenLogin = JWTValidacionesControlador_1.ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
+            const CrearCurso = yield database_1.default.query('insert into cursousuario  set ? ', [{
+                    idCursoUsuario: null,
+                    idUsuario: TokenLogin.idUsuario,
+                    idCurso: req.body.idCurso
+                }], function (err, result, fields) {
+                return __awaiter(this, void 0, void 0, function* () {
+                    if (err) {
+                        res.status(404).json();
+                    }
+                    ;
+                    res.json({ Estado: "Correcto" });
+                });
+            });
+        });
+    }
+    QuitarCursoFavoritos(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var TokenLogin = JWTValidacionesControlador_1.ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
+            const CrearCurso = yield database_1.default.query('delete from cursousuario  where  idUsuario = ? and idCurso = ? ', [
+                TokenLogin.idUsuario,
+                req.body.idCurso
+            ], function (err, result, fields) {
+                return __awaiter(this, void 0, void 0, function* () {
+                    if (err) {
+                        res.status(404).json();
+                    }
+                    ;
+                    res.json({ Estado: "Correcto" });
+                });
+            });
+        });
+    }
+    GetPreguntasProfesor(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var TokenLogin = JWTValidacionesControlador_1.ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
+            const CrearCurso = yield database_1.default.query('select * from preguntasseccion  where Respuesta = ""  and idSeccionCurso in (select idSeccionCurso from seccioncurso where  idCurso in (select idCurso from curso where idProfesor = ? )) ', [
+                TokenLogin.idUsuario,
+            ], function (err, result, fields) {
+                return __awaiter(this, void 0, void 0, function* () {
+                    if (err) {
+                        res.status(404).json();
+                    }
+                    ;
+                    res.json(result);
+                });
+            });
+        });
+    }
+    ResponderPreguntasProfesor(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log(req.body);
+            const CrearCurso = yield database_1.default.query('Update from preguntasseccion set ?   where idPreguntasSeccion = ? ', [
+                req.body,
+                req.body.idPreguntasSeccion
+            ], function (err, result, fields) {
+                return __awaiter(this, void 0, void 0, function* () {
+                    if (err) {
+                        res.status(404).json();
+                    }
+                    ;
+                    res.json(result);
                 });
             });
         });
