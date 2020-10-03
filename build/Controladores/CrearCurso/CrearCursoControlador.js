@@ -72,11 +72,16 @@ class CrearCursoControlador {
     }
     GetListCursos(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield database_1.default.query('SELECT * FROM Curso WHERE idEstadoCurso = 1 ', function (err, result, fields) {
-                if (err)
-                    throw err;
-                res.json(result);
-            });
+            var TokenLogin = JWTValidacionesControlador_1.ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
+            if (TokenLogin.idUsuario == undefined) {
+            }
+            else if (TokenLogin.idTipoUsuario == "3") {
+                yield database_1.default.query('SELECT * FROM Curso WHERE idEstadoCurso = 1 and idProfesor = ? ', [TokenLogin.idUsuario], function (err, result, fields) {
+                    if (err)
+                        throw err;
+                    res.json(result);
+                });
+            }
         });
     }
     GetListSeccioness(req, res) {
@@ -86,6 +91,74 @@ class CrearCursoControlador {
                 if (err)
                     throw err;
                 res.json(result);
+            });
+        });
+    }
+    EliminarFiltrosCurso(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var TokenLogin = JWTValidacionesControlador_1.ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
+            if (TokenLogin.idUsuario == undefined) {
+            }
+            else if (TokenLogin.idTipoUsuario == "3") {
+                const CrearCurso = yield database_1.default.query('DELETE FROM filtrocurso where idCurso = ? ', [req.body.idCurso], function (err, result, fields) {
+                    return __awaiter(this, void 0, void 0, function* () {
+                        if (err) {
+                            res.json({ err: err });
+                        }
+                        else {
+                            res.json({ Estado: "Correcto" });
+                        }
+                    });
+                });
+            }
+        });
+    }
+    CreateFiltrosCursoEtnicos(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var TokenLogin = JWTValidacionesControlador_1.ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
+            if (TokenLogin.idUsuario == undefined) {
+            }
+            else if (TokenLogin.idTipoUsuario == "3") {
+                console.log(req.body);
+                const CrearCurso = yield database_1.default.query('insert into filtrocurso set ? ', [req.body.Filtro], function (err, result, fields) {
+                    return __awaiter(this, void 0, void 0, function* () {
+                        if (err) {
+                            res.json({ err: err });
+                        }
+                        else {
+                            res.json({ Estado: "Correcto" });
+                        }
+                    });
+                });
+            }
+        });
+    }
+    CreateFiltrosCursoExclusivos(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var TokenLogin = JWTValidacionesControlador_1.ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
+            if (TokenLogin.idUsuario == undefined) {
+            }
+            else if (TokenLogin.idTipoUsuario == "3") {
+                const CrearCurso = yield database_1.default.query('DELETE FROM filtrocurso where idCurso = ? ', [req.body.idCurso], function (err, result, fields) {
+                    return __awaiter(this, void 0, void 0, function* () {
+                        if (err) {
+                            res.json({ err: err });
+                        }
+                        else {
+                            res.json({ Estado: "Correcto" });
+                        }
+                    });
+                });
+            }
+        });
+    }
+    PostCrearCursoCompleto(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("Hola");
+            yield database_1.default.query('Update Curso set idEstadoCurso =  2 WHERE idCurso = ? ', [req.body.idCurso], function (err, result, fields) {
+                if (err)
+                    throw err;
+                res.json("Correcto");
             });
         });
     }

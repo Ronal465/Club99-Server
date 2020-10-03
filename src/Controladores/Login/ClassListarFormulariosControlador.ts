@@ -1,5 +1,8 @@
 import { Request, Response } from 'express';
 import pool from '../../database';
+import { ObtJWTValidacionesControlador } from "../../Controladores/Validaciones/JWTValidacionesControlador";
+
+
 
 class ListarFormulariosControlador {
 
@@ -210,7 +213,7 @@ class ListarFormulariosControlador {
         const { idUsuario } = req.params;
 
 
-        await pool.query('SELECT * FROM usuario  where  idUsuario = ?' , [idUsuario],function (err, result, fields) {
+        await pool.query('SELECT * FROM usuario  where  idUsuario = ?', [idUsuario], function (err, result, fields) {
 
             if (err) { throw err };
 
@@ -224,12 +227,45 @@ class ListarFormulariosControlador {
         });
 
     }
+
+    // Numero
+    public async GetListUsuarios(req: Request, res: Response) {
+
+        var TokenLogin = await ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
+       
+
+            console.log(TokenLogin);
+
+        if (TokenLogin.idTipoUsuario == 4) {
+
+
+            await pool.query('SELECT * FROM usuario', function (err, result, fields) {
+
+                if (err) { throw err };
+     
+                if (result.length > 0) {
+                    return res.json(result);
+                }
+            });
+
+        }else{
+            return res.json({});
+        }
+    
+
+
+
+
+
+
+
+    }
     public async GetUsaurioUbicacion(req: Request, res: Response) {
 
         const { idUsuario } = req.params;
 
 
-        await pool.query('SELECT * FROM ubicacion  where  idUsuario = ?' , [idUsuario],function (err, result, fields) {
+        await pool.query('SELECT * FROM ubicacion  where  idUsuario = ?', [idUsuario], function (err, result, fields) {
 
             if (err) { throw err };
 
@@ -248,7 +284,7 @@ class ListarFormulariosControlador {
         const { idUsuario } = req.params;
 
 
-        await pool.query('SELECT * FROM seguridadsocial  where  idUsuario = ?' , [idUsuario],function (err, result, fields) {
+        await pool.query('SELECT * FROM seguridadsocial  where  idUsuario = ?', [idUsuario], function (err, result, fields) {
 
             if (err) { throw err };
 
@@ -267,7 +303,7 @@ class ListarFormulariosControlador {
         const { idUsuario } = req.params;
 
 
-        await pool.query('SELECT * FROM exclusividad  where  idUsuario = ?' , [idUsuario],function (err, result, fields) {
+        await pool.query('SELECT * FROM exclusividad  where  idUsuario = ?', [idUsuario], function (err, result, fields) {
 
             if (err) { throw err };
 
@@ -281,6 +317,23 @@ class ListarFormulariosControlador {
         });
 
     }
+
+    public async GetUsuarioToken(req: Request, res: Response) {
+
+        console.log(req.body.TokenLogin);
+        
+        var TokenLogin = await ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
+       
+
+        console.log(TokenLogin);
+ 
+        res.json( {idUsuario: TokenLogin.idUsuario});
+
+
+
+
+    }
+
 }
 
 export const ObtListarFormulariosControlador = new ListarFormulariosControlador();

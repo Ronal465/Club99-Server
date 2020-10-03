@@ -29,6 +29,8 @@ class ListasFormulariosRutas {
         this.router.get('/api/Get/SeguridadSocial/Usuario/:idUsuario', ClassListarFormulariosControlador_1.ObtListarFormulariosControlador.GetUsaurioSeguridadSocial);
         this.router.get('/api/Get/Ubicacion/Usuario/:idUsuario', ClassListarFormulariosControlador_1.ObtListarFormulariosControlador.GetUsaurioUbicacion);
         this.router.get('/api/Get/Exclusividad/Usuario/:idUsuario', ClassListarFormulariosControlador_1.ObtListarFormulariosControlador.GetUsaurioExclusividad);
+        this.router.post('/api/list/Usuarios', ClassListarFormulariosControlador_1.ObtListarFormulariosControlador.GetListUsuarios);
+        this.router.post('/api/Get/Usuario', ClassListarFormulariosControlador_1.ObtListarFormulariosControlador.GetUsuarioToken);
     }
 }
 const ObtListasFormulariosRutas = new ListasFormulariosRutas();

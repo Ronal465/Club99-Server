@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ObtListarFormulariosControlador = void 0;
 const database_1 = __importDefault(require("../../database"));
+const JWTValidacionesControlador_1 = require("../../Controladores/Validaciones/JWTValidacionesControlador");
 class ListarFormulariosControlador {
     // Numero 1
     GetListProfesion(req, res) {
@@ -218,6 +219,27 @@ class ListarFormulariosControlador {
             });
         });
     }
+    // Numero
+    GetListUsuarios(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var TokenLogin = yield JWTValidacionesControlador_1.ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
+            console.log(TokenLogin);
+            if (TokenLogin.idTipoUsuario == 4) {
+                yield database_1.default.query('SELECT * FROM usuario', function (err, result, fields) {
+                    if (err) {
+                        throw err;
+                    }
+                    ;
+                    if (result.length > 0) {
+                        return res.json(result);
+                    }
+                });
+            }
+            else {
+                return res.json({});
+            }
+        });
+    }
     GetUsaurioUbicacion(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { idUsuario } = req.params;
@@ -267,6 +289,14 @@ class ListarFormulariosControlador {
                     res.status(404).json({ text: "El Usuario No Existe" });
                 }
             });
+        });
+    }
+    GetUsuarioToken(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log(req.body.TokenLogin);
+            var TokenLogin = yield JWTValidacionesControlador_1.ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
+            console.log(TokenLogin);
+            res.json({ idUsuario: TokenLogin.idUsuario });
         });
     }
 }

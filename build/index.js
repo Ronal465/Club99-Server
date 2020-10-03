@@ -15,6 +15,7 @@ const Registrar_1 = __importDefault(require("./routes/Login/Registrar"));
 const ClassInicioRutas_1 = __importDefault(require("./routes/Inicio/ClassInicioRutas"));
 const AWSRutas_1 = __importDefault(require("./routes/AWS/AWSRutas"));
 const CrearCursoRutas_1 = __importDefault(require("./routes/CrearCurso/CrearCursoRutas"));
+const ClassInicioRutas_2 = __importDefault(require("./routes/MirarCurso/ClassInicioRutas"));
 class Server {
     constructor() {
         this.app = express_1.default();
@@ -37,6 +38,7 @@ class Server {
         this.app.use(ClassInicioRutas_1.default);
         this.app.use(AWSRutas_1.default);
         this.app.use(CrearCursoRutas_1.default);
+        this.app.use(ClassInicioRutas_2.default);
     }
     start() {
         this.app.listen(this.app.get('port'), () => {

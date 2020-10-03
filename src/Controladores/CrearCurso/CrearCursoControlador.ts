@@ -47,17 +47,17 @@ class CrearCursoControlador {
   public async PostCrearSeccion(req: Request, res: Response) {
 
 
-      const CrearCurso = await pool.query('INSERT INTO seccioncurso set ? ', [req.body], async function (err, result, fields) {
+    const CrearCurso = await pool.query('INSERT INTO seccioncurso set ? ', [req.body], async function (err, result, fields) {
 
-        if (err) { res.json({ err: err }) }
+      if (err) { res.json({ err: err }) }
 
-        else {
+      else {
 
-          res.json({ Estado: "Correcto" });
+        res.json({ Estado: "Correcto" });
 
-        }
-      });
-    
+      }
+    });
+
 
 
 
@@ -84,25 +84,140 @@ class CrearCursoControlador {
 
   public async GetListCursos(req: Request, res: Response) {
 
-    await pool.query('SELECT * FROM Curso WHERE idEstadoCurso = 1 ', function (err, result, fields) {
+
+    var TokenLogin = ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
+
+
+
+    if (TokenLogin.idUsuario == undefined) {
+
+
+
+    } else if (TokenLogin.idTipoUsuario == "3") {
+
+    await pool.query('SELECT * FROM Curso WHERE idEstadoCurso = 1 and idProfesor = ? ',[TokenLogin.idUsuario], function (err, result, fields) {
       if (err) throw err;
       res.json(result);
     });
+  }
 
   }
   public async GetListSeccioness(req: Request, res: Response) {
+    
     const { idCurso } = req.params;
 
-    await pool.query('SELECT * FROM seccioncurso WHERE idCurso = ?',{idCurso}, function (err, result, fields) {
+    await pool.query('SELECT * FROM seccioncurso WHERE idCurso = ?', { idCurso }, function (err, result, fields) {
       if (err) throw err;
       res.json(result);
     });
 
   }
 
+  public async EliminarFiltrosCurso(req: Request, res: Response) {
+
+
+    var TokenLogin = ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
 
 
 
+    if (TokenLogin.idUsuario == undefined) {
+
+
+
+    } else if (TokenLogin.idTipoUsuario == "3") {
+
+
+      const CrearCurso = await pool.query('DELETE FROM filtrocurso where idCurso = ? ', [req.body.idCurso], async function (err, result, fields) {
+
+        if (err) { res.json({ err: err }) }
+
+        else {
+
+          res.json({ Estado: "Correcto" });
+
+        }
+      });
+    }
+
+
+
+
+  }
+
+  public async CreateFiltrosCursoEtnicos(req: Request, res: Response) {
+
+
+    var TokenLogin = ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
+
+
+
+    if (TokenLogin.idUsuario == undefined) {
+
+
+
+    } else if (TokenLogin.idTipoUsuario == "3") {
+
+      console.log(req.body);
+
+      const CrearCurso = await pool.query('insert into filtrocurso set ? ', [req.body.Filtro], async function (err, result, fields) {
+
+        if (err) { res.json({ err: err }) }
+
+        else {
+
+          res.json({ Estado: "Correcto" });
+
+        }
+      });
+    }
+
+
+
+
+  }
+  public async CreateFiltrosCursoExclusivos(req: Request, res: Response) {
+
+
+    var TokenLogin = ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
+
+
+
+    if (TokenLogin.idUsuario == undefined) {
+
+
+
+    } else if (TokenLogin.idTipoUsuario == "3") {
+
+
+      const CrearCurso = await pool.query('DELETE FROM filtrocurso where idCurso = ? ', [req.body.idCurso], async function (err, result, fields) {
+
+        if (err) { res.json({ err: err }) }
+
+        else {
+
+          res.json({ Estado: "Correcto" });
+
+        }
+      });
+    }
+
+
+
+
+  }
+  public async PostCrearCursoCompleto(req: Request, res: Response) {
+
+    console.log("Hola");
+
+    await pool.query('Update Curso set idEstadoCurso =  2 WHERE idCurso = ? ', [req.body.idCurso], function (err, result, fields) {
+      if (err) throw err;
+      res.json("Correcto");
+    });
+
+  }
+
+  
+  
 
 }
 

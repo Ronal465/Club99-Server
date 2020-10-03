@@ -13,7 +13,7 @@ import Regis from "./routes/Login/Registrar";
 import ObtInicioRuta from "./routes/Inicio/ClassInicioRutas";
 import ObtAWS from "./routes/AWS/AWSRutas";
 import ObtCrearCursoRutas from "./routes/CrearCurso/CrearCursoRutas";
-
+import ObtMirarCUrso from "./routes/MirarCurso/ClassInicioRutas";
 
 
 class Server {
@@ -45,6 +45,7 @@ class Server {
         this.app.use(ObtInicioRuta);
         this.app.use(ObtAWS);
         this.app.use(ObtCrearCursoRutas);
+        this.app.use(ObtMirarCUrso);
 
     }
 

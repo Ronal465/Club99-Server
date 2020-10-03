@@ -86,6 +86,7 @@ class JWTValidacionesControlador {
          return decoded;
 
       } catch (err) {
+
          decoded = {};
 
          return decoded;

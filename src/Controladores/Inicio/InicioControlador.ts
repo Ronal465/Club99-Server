@@ -104,6 +104,7 @@ class InicioControlador {
 
     }
 
+
     public async ConsultProfesor(req: Request, res: Response) {
 
 
