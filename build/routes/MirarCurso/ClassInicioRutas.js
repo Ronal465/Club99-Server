@@ -11,6 +11,11 @@ class ListasFormulariosRutas {
         //Ruta Para Obtener una lista de todos los generos registrados
         this.router.post('/api/MisCuros/List/Cursos', MirarCursoController_1.ObtMirarCursoContrller.ObtenerMisCursos);
         this.router.post('/api/MisCuros/Get/Curso', MirarCursoController_1.ObtMirarCursoContrller.ObtenerCursoUsuario);
+        this.router.post('/api/VerCurso/Get/Profesor', MirarCursoController_1.ObtMirarCursoContrller.ObtenerProfesorCurso);
+        this.router.post('/api/VerCurso/Get/Preguntas', MirarCursoController_1.ObtMirarCursoContrller.PbtenerPreguntasCurso);
+        this.router.post('/api/VerCurso/Crear/Preguntas', MirarCursoController_1.ObtMirarCursoContrller.CrearPreguntaCurso);
+        this.router.post('/api/MisCuros/Get/InfoCurso', MirarCursoController_1.ObtMirarCursoContrller.ObtenerInfoCursoUsuario);
+        this.router.post('/api/InfoCurso/Validar/Curso', MirarCursoController_1.ObtMirarCursoContrller.ValidarCursoAsignado);
     }
 }
 const ObtListasFormulariosRutas = new ListasFormulariosRutas();

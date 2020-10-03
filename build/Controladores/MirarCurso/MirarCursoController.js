@@ -39,19 +39,138 @@ class MirarCursoContrller {
         return __awaiter(this, void 0, void 0, function* () {
             var TokenLogin = JWTValidacionesControlador_1.ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
             if (TokenLogin.idUsuario == undefined) {
+                res.status(404).json();
             }
             else {
                 const CrearCurso = yield database_1.default.query('SELECT * FROM Curso WHERE  idCurso in (Select idCurso FROM cursousuario where idUsuario = ? and idCurso = ?) ', [TokenLogin.idUsuario, req.body.idCurso], function (err, result, fields) {
                     return __awaiter(this, void 0, void 0, function* () {
                         if (err) {
-                            res.json(err);
+                            res.status(404).json();
+                        }
+                        ;
+                        if (result.length > 0) {
+                            return res.json(result);
                         }
                         else {
-                            res.json(result);
+                            res.status(404).json();
                         }
                     });
                 });
             }
+        });
+    }
+    ObtenerProfesorCurso(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var idCurso = req.body.idCurso;
+            const CrearCurso = yield database_1.default.query('SELECT * FROM ProfesorCurso WHERE  idUsuario in (Select idProfesor FROM Curso where idCurso = ?) ', [idCurso], function (err, result, fields) {
+                return __awaiter(this, void 0, void 0, function* () {
+                    if (err) {
+                        res.json(err);
+                    }
+                    else {
+                        const CrearCurso = yield database_1.default.query('select Nombres,Apellidos from usuario where idUsuario = ? ', [result[0].idUsuario], function (err, result2, fields) {
+                            return __awaiter(this, void 0, void 0, function* () {
+                                if (err) {
+                                    res.json(err);
+                                }
+                                else {
+                                    console.log(result2);
+                                    res.json({
+                                        idProfesorCurso: result[0].idProfesorCurso,
+                                        idUsuario: result[0].idUsuario,
+                                        LinkImagenProfesor: result[0].LinkImagenProfesor,
+                                        biografia: result[0].biografia,
+                                        Nombres: result2[0].Nombres,
+                                        Apellidos: result2[0].Apellidos
+                                    });
+                                }
+                            });
+                        });
+                    }
+                });
+            });
+        });
+    }
+    PbtenerPreguntasCurso(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var idSeccionCurso = req.body.idSeccionCurso;
+            const CrearCurso = yield database_1.default.query('SELECT * FROM PreguntasSeccion WHERE idSeccionCurso = ? ', [idSeccionCurso], function (err, result, fields) {
+                return __awaiter(this, void 0, void 0, function* () {
+                    if (err) {
+                        res.json(err);
+                    }
+                    res.json(result);
+                });
+            });
+        });
+    }
+    CrearPreguntaCurso(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var TokenLogin = JWTValidacionesControlador_1.ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
+            if (TokenLogin.idUsuario == undefined) {
+            }
+            else {
+                var Pregunta = {
+                    idPreguntasSeccion: null,
+                    Pregunta: req.body.Pregunta,
+                    Respuesta: "",
+                    idSeccionCurso: req.body.idSeccionCurso,
+                    idUsuario: TokenLogin.idUsuario
+                };
+                console.log(Pregunta);
+                const CrearPregunta = yield database_1.default.query('insert into PreguntasSeccion set ? ', [Pregunta], function (err, result, fields) {
+                    return __awaiter(this, void 0, void 0, function* () {
+                        if (err) {
+                            res.json(err);
+                        }
+                        res.json({ mensaje: "Correcto" });
+                    });
+                });
+            }
+        });
+    }
+    ObtenerInfoCursoUsuario(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var TokenLogin = JWTValidacionesControlador_1.ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
+            const CrearCurso = yield database_1.default.query('SELECT * FROM Curso  where idCurso = ? ', [req.body.idCurso], function (err, result, fields) {
+                return __awaiter(this, void 0, void 0, function* () {
+                    if (err) {
+                        res.status(404).json();
+                    }
+                    ;
+                    if (TokenLogin.idUsuario == undefined) {
+                        res.json({
+                            Estado: "Fallo",
+                            Curso: result[0]
+                        });
+                    }
+                    else {
+                        res.json({
+                            Estado: "Correcto",
+                            Curso: result[0]
+                        });
+                    }
+                });
+            });
+        });
+    }
+    ValidarCursoAsignado(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var TokenLogin = JWTValidacionesControlador_1.ObtJWTValidacionesControlador.VerificarLoginToken(req.body.TokenLogin);
+            const CrearCurso = yield database_1.default.query('SELECT * FROM cursousuario  where idUsuario = ? ', [TokenLogin.idUsuario], function (err, result, fields) {
+                return __awaiter(this, void 0, void 0, function* () {
+                    if (err) {
+                        res.status(404).json();
+                    }
+                    ;
+                    if (result.length > 0) {
+                        return res.json({ Estado: "Asignado" });
+                    }
+                    else {
+                        return res.json({ Estado: "Fallo" });
+                    }
+                });
+            });
         });
     }
 }
